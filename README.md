@@ -1,4 +1,4 @@
-## Capo - Bring the team together.
+*Capo - Bring the team together.*
 
 A WIP from Lawrence Hunt and Adam Boatman.
 
