@@ -67,6 +67,7 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Header />
         <Route exact path="/" component={Home} />
         <Route path="/team/:teamId" component={Team} />
       </div>
