@@ -5,7 +5,8 @@ import NavBar from './NavBar'
 import {Route} from 'react-router-dom'
 import Home from './Home'
 import Team from './Team'
-
+import Fixtures from './Fixtures'
+import Table from './Table'
 
 class App extends Component {
   // constructor(props) {
@@ -65,10 +66,12 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="home">
         <NavBar />
         <Route exact path="/" component={Home} />
-        <Route path="/team/:teamId" component={Team} />
+        <Route path="/team" component={Team} />
+        <Route path="/fixtures" component={Fixtures} />
+        <Route path="/table" component={Table} />
       </div>
     );
   }
