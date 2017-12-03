@@ -73,8 +73,6 @@ class App extends Component {
     base.removeBinding(this.ref)
   }
 
-
-
   render() {
     return (
       <div className="home">
@@ -83,7 +81,7 @@ class App extends Component {
           logout={this.logout}
           user={this.state.uid}
         />
-        <Route path="/" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route path="/team" component={Team} />
         <Route path="/fixtures" component={Fixtures} />
         <Route path="/table" component={Table} />
