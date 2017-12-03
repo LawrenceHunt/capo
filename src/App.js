@@ -25,6 +25,10 @@ class App extends Component {
     })
   }
 
+  componentWillUnmount() {
+    base.removeBinding(this.ref)
+  }
+
   addMessage(e) {
     e.preventDefault()
     const messages = [...this.state.messages]
