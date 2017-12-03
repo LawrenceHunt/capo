@@ -1,17 +1,17 @@
+// React
 import React, { Component } from 'react';
-import {base} from '../base'
-import NavBar from './NavBar'
 import {Route} from 'react-router-dom'
+// Firebase
+import {base} from '../base'
+// Components
+import NavBar from './NavBar'
 import Home from './Home'
 import Team from './Team'
-<<<<<<< HEAD
-
-// default state from ./data
-import teams from '../data/teams'
-=======
 import Fixtures from './Fixtures'
 import Table from './Table'
->>>>>>> cd9677ebf97a548cef446433aa589b819454654d
+// default state
+import teams from '../data/teams'
+
 
 class App extends Component {
   constructor(props) {
