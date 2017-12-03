@@ -6,19 +6,17 @@ import createHistory from 'history/createBrowserHistory'
 // css
 import './index.css';
 // components
-import App from './App';
+import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import Team from './components/Team'
-// import NotFound from './components/NotFound'
 
 const history = createHistory()
 
-const routes = () => (
+const Routes = (
   <Router history={history}>
     <App />
   </Router>
 )
 
-// <Miss component={NotFound}></Miss>
-ReactDOM.render(routes, document.getElementById('root'));
+ReactDOM.render(Routes, document.getElementById('root'));
 registerServiceWorker();
