@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
-// import fire from './fire';
-// import {base} from './base'
+import {base} from '../base'
 import NavBar from './NavBar'
 import {Route} from 'react-router-dom'
 import Home from './Home'
 import Team from './Team'
 
+// default state from ./data
+import teams from '../data/teams'
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { messages: [] }; // <- set up react state
-  // }
+  constructor(props) {
+    super(props);
+    this.state = { messages: [] }; // <- set up react state
+  }
+
   // componentWillMount(){
   //   /* Create reference to messages in Firebase Database */
   //   let messagesRef = db.ref('messages').orderByKey().limitToLast(100);
@@ -21,19 +23,19 @@ class App extends Component {
   //     this.setState({ messages: [message].concat(this.state.messages) });
   //   })
   // }
-  //
-  // componentWillMount() {
-  //   this.ref = base.syncState('messages', {
-  //     context: this,
-  //     state: 'messages',
-  //     asArray: true
-  //   })
-  // }
-  //
-  // componentWillUnmount() {
-  //   base.removeBinding(this.ref)
-  // }
-  //
+
+  componentWillMount() {
+    this.ref = base.syncState('messages', {
+      context: this,
+      state: 'messages',
+      asArray: true
+    })
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref)
+  }
+
   // addMessage(e) {
   //   e.preventDefault()
   //   const messages = [...this.state.messages]
@@ -67,8 +69,12 @@ class App extends Component {
     return (
       <div>
         <NavBar />
-        <Route exact path="/" component={Home} />
-        <Route path="/team/:teamId" component={Team} />
+
+        <Route path="/login" component={Login} />
+        <Route path="/" component={Home} />
+
+        <Route path="/team" />
+        <Route path="/team/:teamId" component={Team}/>
       </div>
     );
   }
