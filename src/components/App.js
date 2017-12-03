@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 // import fire from './fire';
 // import {base} from './base'
 import Header from './Header'
-import Main from './Main'
+// import Main from './Main'
+import {Route} from 'react-router-dom'
+import Home from './Home'
+import Team from './Team'
+
+
 class App extends Component {
   // constructor(props) {
   //   super(props);
@@ -62,8 +67,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header />
-        <Main />
+        <Route exact path="/" component={Home} />
+        <Route path="/team/:teamId" component={Team} />
       </div>
     );
   }

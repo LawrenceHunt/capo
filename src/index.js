@@ -13,7 +13,7 @@ import Team from './components/Team'
 const history = createHistory()
 
 const Routes = (
-  <Router history={history}>
+  <Router>
     <App />
   </Router>
 )
