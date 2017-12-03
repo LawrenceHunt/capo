@@ -12,7 +12,7 @@ import Team from './Team.jsx'
 import Fixtures from './Fixtures.jsx'
 import Table from './Table.jsx'
 import Onboarding from './Onboarding.jsx'
-import FontAwesome from 'react-fontawesome'
+import Loading from './Loading.jsx'
 // default state
 // import teams from '../data/teams'
 
@@ -96,41 +96,29 @@ class App extends Component {
     }
   }
 
-  renderLoading() {
-    return (
-      <div>
-        <h1>Loading!!!</h1>
-        <FontAwesome name="futbol-o" size="6x" spin/>
-      </div>
-    )
-  }
-
   render() {
-    if (this.state.uid === "undefined" || this.state.teams.length === 0) { return this.renderLoading() }
-
-    const userBelongsToATeam = this.userBelongsToATeam()
-
-    const OnboardingWithProps = () => (
-      <Onboarding
-        createTeam={this.createTeam}
-        uid={this.state.uid}
-      />
-    )
-    const HomeWithProps = () => (
-      <Home
-        userBelongsToATeam={userBelongsToATeam}
-      />
-    )
+    if (this.state.uid === "undefined" || this.state.teams.length === 0) { return <Loading /> }
 
     return (
       <div className="home">
+
         <NavBar
           authenticate={this.authenticate}
           logout={this.logout}
           user={this.state.uid}
         />
-        <Route exact path="/" component={HomeWithProps} />
-        <Route path="/onboarding" component={OnboardingWithProps}/>
+
+        <Route exact path="/" render={() => (
+          <Home userBelongsToATeam={this.userBelongsToATeam()} />)}
+        />
+
+        <Route path="/onboarding" render={() => (
+          <Onboarding
+            createTeam={this.createTeam}
+            uid={this.state.uid}
+          />)}
+        />
+
         <Route path="/team" component={Team} />
         <Route path="/fixtures" component={Fixtures} />
         <Route path="/table" component={Table} />
