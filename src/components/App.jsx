@@ -6,12 +6,13 @@ import {base} from '../base'
 import firebase from 'firebase';
 
 // Components
-import NavBar from './NavBar'
-import Home from './Home'
-import Team from './Team'
-import Fixtures from './Fixtures'
-import Table from './Table'
-import Onboarding from './Onboarding'
+import NavBar from './NavBar.jsx'
+import Home from './Home.jsx'
+import Team from './Team.jsx'
+import Fixtures from './Fixtures.jsx'
+import Table from './Table.jsx'
+import Onboarding from './Onboarding.jsx'
+import FontAwesome from 'react-fontawesome'
 // default state
 // import teams from '../data/teams'
 
@@ -72,9 +73,7 @@ class App extends Component {
   logout() {
     firebase.auth().signOut().then(() => {
       this.setState({uid: null})
-    }).catch(function(error) {
-      console.log(error)
-    });
+    }).catch((error) => console.log(error));
   }
 
   createTeam(teamObj) {
@@ -99,7 +98,10 @@ class App extends Component {
 
   renderLoading() {
     return (
-      <div>Loading!!!</div>
+      <div>
+        <h1>Loading!!!</h1>
+        <FontAwesome name="futbol-o" size="6x" spin/>
+      </div>
     )
   }
 
