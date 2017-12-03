@@ -94,7 +94,7 @@ class App extends Component {
       } else {
         return false
       }
-    }  
+    }
   }
 
   renderLoading() {
@@ -104,7 +104,7 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.uid == "undefined" || this.state.teams.length == 0) { return this.renderLoading() }
+    if (this.state.uid === "undefined" || this.state.teams.length === 0) { return this.renderLoading() }
 
     const userBelongsToATeam = this.userBelongsToATeam()
 
