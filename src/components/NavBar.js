@@ -3,9 +3,12 @@ import { Link } from 'react-router-dom'
 
 const NavBar = () => (
   <nav>
-    <ul>
-      <li><Link to='/'>Home</Link></li>
-    </ul>
+    <div className="nav-bar">
+      <div className="nav-item"><Link to='/team'>Team</Link></div>
+      <div className="nav-item"><Link to='/table'>Table</Link></div>
+      <div className="nav-item"><Link to='/fixtures'>Fixtures</Link></div>
+      <div className="nav-item"><Link to='/'>Home</Link></div>
+    </div>
   </nav>
 )
 

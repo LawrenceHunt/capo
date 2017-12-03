@@ -4,9 +4,14 @@ import NavBar from './NavBar'
 import {Route} from 'react-router-dom'
 import Home from './Home'
 import Team from './Team'
+<<<<<<< HEAD
 
 // default state from ./data
 import teams from '../data/teams'
+=======
+import Fixtures from './Fixtures'
+import Table from './Table'
+>>>>>>> cd9677ebf97a548cef446433aa589b819454654d
 
 class App extends Component {
   constructor(props) {
@@ -67,14 +72,16 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="home">
         <NavBar />
 
         <Route path="/login" component={Login} />
         <Route path="/" component={Home} />
+        <Route path="/team" component={Team} />
+        <Route path="/fixtures" component={Fixtures} />
+        <Route path="/table" component={Table} />
 
-        <Route path="/team" />
-        <Route path="/team/:teamId" component={Team}/>
+
       </div>
     );
   }
