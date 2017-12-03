@@ -11,6 +11,7 @@ import Home from './Home'
 import Team from './Team'
 import Fixtures from './Fixtures'
 import Table from './Table'
+import Onboarding from './Onboarding'
 // default state
 // import teams from '../data/teams'
 
@@ -18,11 +19,28 @@ import Table from './Table'
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {}; // <- set up react state
+
+    this.state = {
+      teams: []
+    };
 
     this.authenticate = this.authenticate.bind(this)
     this.authHandler = this.authHandler.bind(this)
     this.logout = this.logout.bind(this)
+    this.userBelongsToATeam = this.userBelongsToATeam.bind(this)
+    this.createTeam = this.createTeam.bind(this)
+  }
+
+  componentWillMount() {
+    this.ref = base.syncState('teams', {
+      context: this,
+      state: 'teams',
+      asArray: true
+    })
+  }
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref)
   }
 
   // AUTH METHODS
@@ -36,10 +54,8 @@ class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        console.log('A USER IS HERE MUTHAFUCKA', user)
         this.authHandler(null, user)
       } else {
-        console.log('no user signed in!!!')
       }
     });
   }
@@ -61,19 +77,49 @@ class App extends Component {
     });
   }
 
-  componentWillMount() {
-    this.ref = base.syncState('messages', {
-      context: this,
-      state: 'messages',
-      asArray: true
+  createTeam(teamObj) {
+    const teams = [...this.state.teams]
+    teams.push(teamObj)
+    this.setState({
+      teams
     })
   }
 
-  componentWillUnmount() {
-    base.removeBinding(this.ref)
+  userBelongsToATeam() {
+    const teams = this.state.teams
+    const uid = this.state.uid
+    for (var i = 0; i < teams.length; i++) {
+      if (teams[i].players.indexOf(uid) > -1) {
+        return true
+      } else {
+        return false
+      }
+    }  
+  }
+
+  renderLoading() {
+    return (
+      <div>Loading!!!</div>
+    )
   }
 
   render() {
+    if (this.state.uid == "undefined" || this.state.teams.length == 0) { return this.renderLoading() }
+
+    const userBelongsToATeam = this.userBelongsToATeam()
+
+    const OnboardingWithProps = () => (
+      <Onboarding
+        createTeam={this.createTeam}
+        uid={this.state.uid}
+      />
+    )
+    const HomeWithProps = () => (
+      <Home
+        userBelongsToATeam={userBelongsToATeam}
+      />
+    )
+
     return (
       <div className="home">
         <NavBar
@@ -81,12 +127,14 @@ class App extends Component {
           logout={this.logout}
           user={this.state.uid}
         />
-        <Route exact path="/" component={Home} />
+        <Route exact path="/" component={HomeWithProps} />
+        <Route path="/onboarding" component={OnboardingWithProps}/>
         <Route path="/team" component={Team} />
         <Route path="/fixtures" component={Fixtures} />
         <Route path="/table" component={Table} />
       </div>
     );
+
   }
 }
 
