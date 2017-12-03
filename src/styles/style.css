@@ -48,7 +48,8 @@
           transform: translateY(-100%);
 }
 .nav-bar {
-  background-color: #001800;
+  background-color: #040404;
+  opacity: 0.8;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -59,13 +60,17 @@
   width: 10vw;
   min-width: 95px;
   height: 100vh;
-  color: #fff;
-  opacity: 0.7;
   -ms-flex-pack: distribute;
       justify-content: space-around;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+a {
+  text-decoration: none;
+}
+a:visited {
+  color: inherit;
 }
 .team {
   display: -webkit-box;
@@ -74,7 +79,7 @@
   width: 100vw;
 }
 .squad-list {
-  background-color: #f00;
+  background-color: #13505b;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -88,7 +93,7 @@
   min-width: 95px;
   height: 100vh;
   color: #fff;
-  opacity: 0.7;
+  opacity: 0.8;
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: flex-start;
@@ -103,6 +108,9 @@
 }
 .bio {
   height: 80vh;
+  background-color: #0c7489;
+  opacity: 0.9;
+  color: #fff;
   display: grid;
   grid-template-columns: 15% 15% 35% 35%;
   grid-template-rows: 10% 20% 20% 20% 20% 10%;
@@ -117,6 +125,8 @@
   grid-column-start: 1;
   grid-column-end: 5;
   text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
   padding: 10px;
   border-bottom: solid #000 1px;
 }
@@ -151,9 +161,14 @@
 .player-stats li {
   margin: 5px;
 }
+@import url("https://fonts.googleapis.com/css?family=Comfortaa");
 body {
   padding: 0;
   margin: 0;
+  background: url("http://wallsdesk.com/wp-content/uploads/2016/02/Black-abstract-Background.jpg") no-repeat;
+  background-size: cover;
+  color: #fff;
+  font-family: 'Comfortaa', cursive;
 }
 h1 {
   font-size: 100px;
@@ -163,9 +178,14 @@ h1 {
   display: -ms-flexbox;
   display: flex;
 }
+@import url("https://fonts.googleapis.com/css?family=Comfortaa");
 body {
   padding: 0;
   margin: 0;
+  background: url("http://wallsdesk.com/wp-content/uploads/2016/02/Black-abstract-Background.jpg") no-repeat;
+  background-size: cover;
+  color: #fff;
+  font-family: 'Comfortaa', cursive;
 }
 h1 {
   font-size: 100px;
