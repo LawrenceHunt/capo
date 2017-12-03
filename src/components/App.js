@@ -28,50 +28,37 @@ class App extends Component {
   // AUTH METHODS
   authenticate() {
     var provider = new firebase.auth.FacebookAuthProvider();
-    // provider.addScope('user_birthday');
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-      // This gives you a Facebook Access Token.
-      // var token = result.credential.accessToken;
-      // The signed-in user info.
-      var user = result.user;
-      console.log(user)
+    firebase.auth().signInWithPopup(provider).then((authData) => {
+      this.authHandler(null, authData)
     });
   }
-  //
-  // componentDidMount() {
-  //   base.onAuth((user) => {
-  //     if(user) {
-  //       this.authHandler(null, { user })
-  //     }
-  //   })
-  // }
 
-  authHandler(err, authData) {
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        console.log('A USER IS HERE MUTHAFUCKA', user)
+        this.authHandler(null, user)
+      } else {
+        console.log('no user signed in!!!')
+      }
+    });
+  }
+
+  authHandler(err, user) {
     if (err) {
       console.log(err)
     }
-    console.log('authData coming from authHandler: ', authData)
-
-    // const storeRef = base.database().ref(this.props.storeId)
-
-    // storeRef.once('value', (snapshot) => {
-    //   const data = snapshot.val() || {}
-    //   if (!data.owner) {
-    //     storeRef.set({
-    //       owner: authData.user.uid
-    //     })
-    //   }
     this.setState({
-      uid: authData.user.uid,
+      uid: user.uid,
     })
-    // })
   }
 
   logout() {
-    base.unauth()
-    this.setState({
-      uid: null
-    })
+    firebase.auth().signOut().then(() => {
+      this.setState({uid: null})
+    }).catch(function(error) {
+      console.log(error)
+    });
   }
 
   componentWillMount() {
@@ -94,7 +81,7 @@ class App extends Component {
         <NavBar
           authenticate={this.authenticate}
           logout={this.logout}
-
+          user={this.state.uid}
         />
         <Route path="/" component={Home} />
         <Route path="/team" component={Team} />

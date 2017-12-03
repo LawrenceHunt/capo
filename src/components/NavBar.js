@@ -4,7 +4,14 @@ import { Link } from 'react-router-dom'
 export default class NavBar extends React.Component {
 
   renderLogin() {
-    return (
+    return this.props.user ? (
+      <nav className="login">
+        <h2>Logout</h2>
+        <button className="facebook"
+          onClick={() => this.props.logout()}
+        >Log the fuck out</button>
+      </nav>
+    ) : (
       <nav className="login">
         <h2>Login</h2>
         <button className="facebook"
