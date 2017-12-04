@@ -93,20 +93,20 @@ class App extends Component {
 
     return (
       <div>
-        <Route path="/" render={ () => !this.state.uid ? (
+        <Route path="/" render={ () => (
           <Login
             uid={this.state.uid}
             userBelongsToATeam={this.userBelongsToATeam()}
             authenticate={this.authenticate}
-          />
-        ) : ( <Redirect to="/fixtures" /> )}
+          />) }
         />
 
         <Route path="/onboarding" render={() => (
           <Onboarding
             createTeam={this.createTeam}
             uid={this.state.uid}
-          />)}
+          />
+        )}
         />
         <Route path="/team" render={() => <Team logout={this.logout} />} />
         <Route path="/fixtures" render={() => <Fixtures logout={this.logout} />} />
