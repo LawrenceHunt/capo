@@ -4,7 +4,6 @@ import {Route} from 'react-router-dom'
 // Firebase
 import {base} from '../base'
 import firebase from 'firebase';
-
 // Components
 import NavBar from './NavBar.jsx'
 import Home from './Home.jsx'
@@ -18,8 +17,8 @@ import Loading from './Loading.jsx'
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
 
     this.state = {
       teams: []
@@ -47,24 +46,19 @@ class App extends Component {
   // AUTH METHODS
   authenticate() {
     var provider = new firebase.auth.FacebookAuthProvider();
-    firebase.auth().signInWithPopup(provider).then((authData) => {
-      this.authHandler(null, authData)
+    firebase.auth().signInWithPopup(provider).then((user) => {
+      this.authHandler(null, user)
     });
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        this.authHandler(null, user)
-      } else {
-      }
+      if (user) this.authHandler(null, user)
     });
   }
 
   authHandler(err, user) {
-    if (err) {
-      console.log(err)
-    }
+    if (err) console.log(err)
     this.setState({
       uid: user.uid,
     })
@@ -88,7 +82,7 @@ class App extends Component {
     const teams = this.state.teams
     const uid = this.state.uid
     for (var i = 0; i < teams.length; i++) {
-      if (teams[i].players.indexOf(uid) > -1) {
+      if (teams[i].players.includes(uid)) {
         return true
       } else {
         return false
@@ -122,6 +116,7 @@ class App extends Component {
         <Route path="/team" component={Team} />
         <Route path="/fixtures" component={Fixtures} />
         <Route path="/table" component={Table} />
+
       </div>
     );
 
