@@ -5,8 +5,9 @@ import {Route} from 'react-router-dom'
 import {base} from '../base'
 import firebase from 'firebase';
 // Components
+import Main from './Main.jsx'
 import NavBar from './NavBar.jsx'
-import Home from './Home.jsx'
+import Login from './Login.jsx'
 import Team from './Team.jsx'
 import Fixtures from './Fixtures.jsx'
 import Table from './Table.jsx'
@@ -91,20 +92,25 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.uid === "undefined" || this.state.teams.length === 0) { return <Loading /> }
+
+
+    // if (this.state.uid === "undefined" || this.state.teams.length === 0) { return <Loading /> }
 
     return (
-      <div className="home">
+      <div>
 
-        <NavBar
-          authenticate={this.authenticate}
-          logout={this.logout}
-          user={this.state.uid}
-        />
-
-        <Route exact path="/" render={() => (
-          <Home userBelongsToATeam={this.userBelongsToATeam()} />)}
-        />
+        <Route exact path="/" render={() => {
+          return this.state.uid ? (
+            <Main {...this.state}
+              logout={this.logout}
+            />
+          ) : (
+            <Login
+              uid={this.state.uid}
+              userBelongsToATeam={this.userBelongsToATeam()}
+              authenticate={this.authenticate}
+            />
+          )}}/>
 
         <Route path="/onboarding" render={() => (
           <Onboarding
@@ -112,11 +118,6 @@ class App extends Component {
             uid={this.state.uid}
           />)}
         />
-
-        <Route path="/team" component={Team} />
-        <Route path="/fixtures" component={Fixtures} />
-        <Route path="/table" component={Table} />
-
       </div>
     );
 

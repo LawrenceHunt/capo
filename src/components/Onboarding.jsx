@@ -21,7 +21,7 @@ export default class Onboarding extends React.Component {
         <h1>Name your team:</h1>
         <form
           ref={(input) => this.createTeamForm = input}
-          className="fish-edit"
+          className="create-team"
           onSubmit={(e) => this.createTeam(e)}
         >
           <input ref={(input) => this.name = input} type="text" placeholder="Team Name" />
