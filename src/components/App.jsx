@@ -1,6 +1,6 @@
 // React
 import React, { Component } from 'react';
-import {Route, Redirect, withRouter} from 'react-router-dom'
+import {Route, withRouter} from 'react-router-dom'
 // Firebase
 import {base} from '../base'
 import firebase from 'firebase';
@@ -99,15 +99,15 @@ class App extends Component {
             uid={this.state.uid}
             userBelongsToATeam={this.userBelongsToATeam()}
             authenticate={this.authenticate}
-          />)
-        }
+          />) }
         />
 
         <Route path="/onboarding" render={() => (
           <Onboarding
             createTeam={this.createTeam}
             uid={this.state.uid}
-          />)}
+          />
+        )}
         />
         <Route path="/team" render={() => <Team logout={this.logout} />} />
         <Route path="/fixtures" render={() => <Fixtures logout={this.logout} />} />
