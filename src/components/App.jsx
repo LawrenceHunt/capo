@@ -1,18 +1,15 @@
 // React
 import React, { Component } from 'react';
-import {Route} from 'react-router-dom'
+import {Route, Redirect, withRouter} from 'react-router-dom'
 // Firebase
 import {base} from '../base'
 import firebase from 'firebase';
 // Components
-import Main from './Main.jsx'
-import NavBar from './NavBar.jsx'
 import Login from './Login.jsx'
 import Team from './Team.jsx'
 import Fixtures from './Fixtures.jsx'
 import Table from './Table.jsx'
 import Onboarding from './Onboarding.jsx'
-import Loading from './Loading.jsx'
 // default state
 // import teams from '../data/teams'
 
@@ -69,6 +66,7 @@ class App extends Component {
     firebase.auth().signOut().then(() => {
       this.setState({uid: null})
     }).catch((error) => console.log(error));
+    this.props.history.push("/")
   }
 
   createTeam(teamObj) {
@@ -93,24 +91,16 @@ class App extends Component {
 
   render() {
 
-
-    // if (this.state.uid === "undefined" || this.state.teams.length === 0) { return <Loading /> }
-
     return (
       <div>
-
-        <Route exact path="/" render={() => {
-          return this.state.uid ? (
-            <Main {...this.state}
-              logout={this.logout}
-            />
-          ) : (
-            <Login
-              uid={this.state.uid}
-              userBelongsToATeam={this.userBelongsToATeam()}
-              authenticate={this.authenticate}
-            />
-          )}}/>
+        <Route path="/" render={ () => !this.state.uid ? (
+          <Login
+            uid={this.state.uid}
+            userBelongsToATeam={this.userBelongsToATeam()}
+            authenticate={this.authenticate}
+          />
+        ) : ( <Redirect to="/fixtures" /> )}
+        />
 
         <Route path="/onboarding" render={() => (
           <Onboarding
@@ -118,10 +108,14 @@ class App extends Component {
             uid={this.state.uid}
           />)}
         />
+        <Route path="/team" render={() => <Team logout={this.logout} />} />
+        <Route path="/fixtures" render={() => <Fixtures logout={this.logout} />} />
+        <Route path="/table" render={() => <Table logout={this.logout} /> } />
       </div>
     );
-
   }
 }
 
-export default App;
+const AppWithRouter = withRouter(App)
+
+export default AppWithRouter;

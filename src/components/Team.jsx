@@ -1,5 +1,6 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome'
+import NavBar from './NavBar.jsx'
 
 class Team extends React.Component {
 
@@ -69,10 +70,17 @@ class Team extends React.Component {
   }
 
   render() {
+    const teamPage = (
+      <div className="team">
+        {this.generateCards()}
+      </div>
+    )
+
     return (
-        <div className="team">
-          {this.generateCards()}
-        </div>
+      <div className="main-container">
+        <NavBar logout={this.props.logout} />
+        {teamPage}
+      </div>
     )
   }
 }

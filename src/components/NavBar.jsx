@@ -17,7 +17,6 @@ export default class NavBar extends React.Component {
           <div className="nav-item"><Link to='/team'><img className="nav-team-logo" src="images/Logo_Battersinaikos.png" alt="team-logo"/></Link></div>
           <div className="nav-item"><Link to='/table'><FontAwesome name="table" size="4x" /></Link></div>
           <div className="nav-item"><Link to='/fixtures'><FontAwesome name="futbol-o" size="4x"/></Link></div>
-          <div className="nav-item"><Link to='/'><FontAwesome name="home" size="4x"/></Link></div>
           {logout}
         </div>
       </nav>
