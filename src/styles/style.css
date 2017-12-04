@@ -47,6 +47,9 @@
   -webkit-transform: translateY(-100%);
           transform: translateY(-100%);
 }
+.loading-screen {
+  text-align: center;
+}
 .nav-bar {
   background-color: #040404;
   opacity: 0.8;
@@ -138,6 +141,15 @@ a:visited {
 .avatar {
   height: 250px;
   border-radius: 5px;
+}
+.stats {
+  font-size: 0.5em;
+  height: 200px;
+  text-align: left;
+  line-height: 50px;
+}
+.mvp {
+  color: #ffd700;
 }
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
