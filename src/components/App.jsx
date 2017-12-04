@@ -82,6 +82,7 @@ class App extends Component {
     const uid = this.state.uid
     for (var i = 0; i < teams.length; i++) {
       if (teams[i].players.includes(uid)) {
+        console.log('I am in a team!', teams[i])
         return true
       } else {
         return false
@@ -93,13 +94,13 @@ class App extends Component {
 
     return (
       <div>
-        <Route path="/" render={ () => !this.state.uid ? (
+        <Route path="/" render={ () => (
           <Login
             uid={this.state.uid}
             userBelongsToATeam={this.userBelongsToATeam()}
             authenticate={this.authenticate}
-          />
-        ) : ( <Redirect to="/fixtures" /> )}
+          />)
+        }
         />
 
         <Route path="/onboarding" render={() => (
