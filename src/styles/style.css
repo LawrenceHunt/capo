@@ -47,6 +47,9 @@
   -webkit-transform: translateY(-100%);
           transform: translateY(-100%);
 }
+.loading-screen {
+  text-align: center;
+}
 .nav-bar {
   background-color: #040404;
   opacity: 0.8;
@@ -77,94 +80,76 @@ a:visited {
   height: 100px;
   width: 100px;
 }
-.team {
+.team-grid {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   width: 100vw;
-}
-.squad-list {
-  background-color: #13505b;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
-  min-width: 95px;
   height: 100vh;
-  color: #fff;
+}
+.player-card {
+  width: 200px;
+  height: 300px;
+  margin: 10px;
+  -webkit-perspective: 300px;
+          perspective: 300px;
   opacity: 0.8;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  overflow-y: scroll;
 }
-.player {
-  padding: 20px;
-  cursor: pointer;
-}
-.bio {
-  height: 80vh;
-  background-color: #0c7489;
-  opacity: 0.9;
-  color: #fff;
-  display: grid;
-  grid-template-columns: 15% 15% 35% 35%;
-  grid-template-rows: 10% 20% 20% 20% 20% 10%;
-  border: solid #000 1px;
-  border-radius: 20px;
-  margin: auto 20px;
-  -webkit-box-flex: 4;
-      -ms-flex: 4;
-          flex: 4;
-}
-.player-name {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  text-align: center;
-  margin-top: auto;
-  margin-bottom: auto;
-  padding: 10px;
-  border-bottom: solid #000 1px;
-}
-.player-picture {
-  position: relative;
-  grid-column-start: 1;
-  grid-column-end: 3;
-  grid-row-start: 2;
-  grid-row-end: 6;
-  border: solid #000 1px;
-  border-radius: 20px;
-  margin: 5px;
-}
-.player-picture span {
+.content {
   position: absolute;
-  top: 45%;
-  left: 45%;
-  -webkit-transform: rotate(45deg);
-          transform: rotate(45deg);
+  width: 100%;
+  height: 100%;
+  -webkit-box-shadow: 0 0 15px rgba(0,0,0,0.1);
+          box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  -webkit-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
 }
-.player-stats {
-  grid-column-start: 3;
-  grid-column-end: 5;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+.player-card:hover .content {
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+  -webkit-transition: -webkit-transform 1s;
+  transition: -webkit-transform 1s;
+  transition: transform 1s;
+  transition: transform 1s, -webkit-transform 1s;
 }
-.player-stats li {
-  margin: 5px;
+.front,
+.back {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  padding-top: 5px;
+  color: #03446a;
+  text-align: center;
+  font-size: 30px;
+  border-radius: 5px;
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+}
+.back {
+  background: #040404;
+  color: #fff;
+  -webkit-transform: rotateY(180deg);
+          transform: rotateY(180deg);
+}
+.avatar {
+  height: 250px;
+  border-radius: 5px;
+}
+.stats {
+  font-size: 0.5em;
+  height: 200px;
+  text-align: left;
+  line-height: 50px;
+}
+.mvp {
+  color: #ffd700;
 }
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
