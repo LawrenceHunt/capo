@@ -14,10 +14,10 @@ export default class Onboarding extends React.Component {
       name: '',
       players: '',
       captains: '',
-      avatar: '',
+      badge: '',
       isUploading: false,
       progress: 0,
-      avatarURL: '',
+      badgeURL: '',
       step: 1
     }
 
@@ -31,8 +31,8 @@ export default class Onboarding extends React.Component {
     console.error(error);
   }
   handleUploadSuccess = (filename) => {
-    this.setState({avatar: filename, progress: 100, isUploading: false});
-    firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({avatarURL: url}));
+    this.setState({badge: filename, progress: 100, isUploading: false});
+    firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({badgeURL: url}));
   };
 
   nextStep(e) {
@@ -40,7 +40,6 @@ export default class Onboarding extends React.Component {
     if (this.formInput.value) {
       this.setState({ name: this.formInput.value, players: this.props.uid, captains: this.props.uid })
     }
-    console.log(this.props.uid)
     this.setState({step: this.state.step + 1});
   }
 
@@ -50,8 +49,8 @@ export default class Onboarding extends React.Component {
 
   uploadToFirebase(e) {
     e.preventDefault()
-    console.log(this.state)
-    // this.props.createTeam(this.state);
+    const teamUpload = { id: this.state.id, name: this.state.name, players: this.state.players, captains: this.state.captains, badge: this.state.badge }
+    firebase.database().ref('teams').push(teamUpload)
   }
 
 
@@ -80,12 +79,12 @@ export default class Onboarding extends React.Component {
               {this.state.isUploading &&
                 <p>Progress: {this.state.progress}</p>
               }
-              {this.state.avatarURL &&
-                <img src={this.state.avatarURL} />
+              {this.state.badgeURL &&
+                <img src={this.state.badgeURL} />
               }
               <FileUploader
                 accept="image/*"
-                name="avatar"
+                name="badge"
                 filename={this.state.id}
                 storageRef={firebase.storage().ref('images')}
                 onUploadStart={this.handleUploadStart}
