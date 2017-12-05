@@ -91,6 +91,7 @@ class App extends Component {
     if (!teams) return
     for (var i = 0; i < teams.length; i++) {
       if (teams[i].players.includes(uid)) {
+        console.log('I am in a team!', teams[i])
         return true
       } else {
         return false
