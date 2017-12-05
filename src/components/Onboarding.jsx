@@ -9,35 +9,43 @@ export default class Onboarding extends React.Component {
     super();
 
     this.state = {
-      step: 1
+      id: randomID(10),
+      step: 1,
+      isUploading: false,
+      progress: null
     }
 
     this.previousStep = this.previousStep.bind(this)
   }
 
   handleUploadStart = () => {
-    this.isUploading = true
-    this.progress = 0
-  };
+    this.setState({
+      isUploading: true,
+      progress: 0
+    })
+  }
 
   handleProgress = (progress) => {
-    this.progress = progress
+    this.setState({progress})
   }
 
   handleUploadError = (error) => {
-    this.isUploading = false
+    this.setState({isUploading: false})
     console.error(error)
   }
 
   handleUploadSuccess = (filename) => {
     this.badge = filename
-    this.progress = 100
-    this.isUploading = false
+    this.setState({
+      progress: 100,
+      isUploading: false,
+      badgeUrl: ''
+    })
     firebase.storage()
             .ref('images')
             .child(filename)
             .getDownloadURL()
-            .then(url => this.badgeURL = url);
+            .then(url => this.setState({badgeURL: url}))
   }
 
   nextStep(e) {
@@ -57,7 +65,7 @@ export default class Onboarding extends React.Component {
   uploadToFirebase(e) {
     e.preventDefault()
     const teamObj = {
-      id: randomID(10),
+      id: this.state.id,
       name: this.name,
       players: this.players,
       captains: this.captains,
@@ -67,49 +75,54 @@ export default class Onboarding extends React.Component {
   }
 
   render() {
-    switch (this.state.step) {
-      case 1:
-        return (
-          <div>
-            <label>Name Your Team</label>
-            <form
-                ref={(input) => this.createTeamForm = input}
-                className="create-team"
-                onSubmit={(e) => this.nextStep(e)}
-            >
-              <input type="text" ref={(input) => this.formInput = input} placeholder="Team Name" />
-              <input type="button" value="Next Step" onClick={(e) => this.nextStep(e)} />
-            </form>
-          </div>
-        )
-      case 2:
-        return (
-          <div>
-            <form>
-              <label>Team Badge:</label>
-              {this.state.isUploading &&
-                <p>Progress: {this.state.progress}</p>
-              }
-              {this.state.badgeURL &&
-                <img src={this.state.badgeURL} />
-              }
-              <FileUploader
-                accept="image/*"
-                name="badge"
-                filename={this.state.id}
-                storageRef={firebase.storage().ref('images')}
-                onUploadStart={this.handleUploadStart}
-                onUploadError={this.handleUploadError}
-                onUploadSuccess={this.handleUploadSuccess}
-                onProgress={this.handleProgress}
-                maxHeight={200}
-                maxWidth={200}
-              />
-              <input type="button" value="Previous Step" onClick={this.previousStep} />
-              <input type="button" value="Finish" onClick={(e) => this.uploadToFirebase(e)} />
-            </form>
-          </div>
-        )
+
+    const teamName = (
+      <div>
+        <label>Name Your Team</label>
+        <form
+          ref={(input) => this.createTeamForm = input}
+          className="create-team"
+          onSubmit={(e) => this.nextStep(e)}
+        >
+          <input type="text" ref={(input) => this.formInput = input} placeholder="Team Name" />
+          <input type="button" value="Next Step" onClick={(e) => this.nextStep(e)} />
+        </form>
+      </div>
+    )
+
+    const teamBadge = (
+      <div>
+        <form>
+          <label>Badge for {this.name}:</label>
+          {this.state.isUploading &&
+            <p>Progress: {this.state.progress}</p>
+          }
+          {this.state.badgeURL &&
+            <img src={this.state.badgeURL} />
+          }
+          <FileUploader
+            accept="image/*"
+            name="badge"
+            filename={this.state.id}
+            storageRef={firebase.storage().ref('images')}
+            onUploadStart={this.handleUploadStart}
+            onUploadError={this.handleUploadError}
+            onUploadSuccess={this.handleUploadSuccess}
+            onProgress={this.handleProgress}
+            maxHeight={200}
+            maxWidth={200}
+          />
+          <input type="button" value="Previous Step" onClick={this.previousStep} />
+          <input type="button" value="Finish" onClick={(e) => this.uploadToFirebase(e)} />
+        </form>
+      </div>
+    )
+
+    const createTeamViews = {
+      1: teamName,
+      2: teamBadge
     }
+
+    return createTeamViews[this.state.step]
   }
 }

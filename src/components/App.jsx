@@ -32,8 +32,6 @@ class App extends Component {
     this.createTeam = this.createTeam.bind(this)
   }
 
-
-
   componentWillMount() {
     this.teamsRef = base.syncState('teams', {
       context: this,
@@ -93,16 +91,11 @@ class App extends Component {
     })
   }
 
-  // createTeam(teamObj) {
-  //   db.ref('teams').push( teamObj );
-  // }
-
   userBelongsToATeam() {
     const teams = this.state.teams
     const uid = this.state.uid
     for (var i = 0; i < teams.length; i++) {
       if (teams[i].players.includes(uid)) {
-        console.log('I am in a team!', teams[i])
         return true
       } else {
         return false
@@ -111,7 +104,6 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.loading)
     if (this.state.loading) return <Loading />
 
     return (
