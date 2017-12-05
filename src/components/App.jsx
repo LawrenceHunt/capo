@@ -5,6 +5,7 @@ import {Route, withRouter} from 'react-router-dom'
 import {base} from '../base'
 import firebase from 'firebase';
 // Components
+import Loading from './Loading.jsx'
 import Login from './Login.jsx'
 import Team from './Team.jsx'
 import Fixtures from './Fixtures.jsx'
@@ -19,7 +20,11 @@ class App extends Component {
     super();
 
     this.state = {
-      teams: []
+      loading: false,
+      capoState: {
+        teams: [],
+        fixtures: []
+      }
     };
 
     this.authenticate = this.authenticate.bind(this)
@@ -30,10 +35,12 @@ class App extends Component {
   }
 
   componentWillMount() {
-    this.ref = base.syncState('teams', {
+    this.ref = base.syncState('capoState', {
       context: this,
-      state: 'teams',
+      state: 'capoState',
       asArray: true
+    }, () => {
+      this.setState({loading: false})
     })
   }
 
@@ -70,16 +77,18 @@ class App extends Component {
   }
 
   createTeam(teamObj) {
-    const teams = [...this.state.teams]
+    const capoState = [...this.state.capoState]
+    const teams = capoState.teams
     teams.push(teamObj)
     this.setState({
-      teams
+      capoState
     })
   }
 
   userBelongsToATeam() {
-    const teams = this.state.teams
+    const teams = this.state.capoState.teams
     const uid = this.state.uid
+    if (!teams) return
     for (var i = 0; i < teams.length; i++) {
       if (teams[i].players.includes(uid)) {
         return true
@@ -90,6 +99,7 @@ class App extends Component {
   }
 
   render() {
+    if (this.state.loading) return <Loading />
 
     return (
       <div>
