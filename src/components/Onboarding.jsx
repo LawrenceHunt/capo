@@ -98,7 +98,7 @@ export default class Onboarding extends React.Component {
             <p>Progress: {this.state.progress}</p>
           }
           {this.state.badgeURL &&
-            <img src={this.state.badgeURL} />
+            <img src={this.state.badgeURL} alt={`${this.state.badgeUrl}`}/>
           }
           <FileUploader
             accept="image/*"
