@@ -20,12 +20,10 @@ class App extends Component {
     super();
 
     this.state = {
-      loading: false,
-      capoState: {
-        teams: [],
-        fixtures: []
-      }
-    };
+      loading: true,
+      teams: [],
+      fixtures: []
+    }
 
     this.authenticate = this.authenticate.bind(this)
     this.authHandler = this.authHandler.bind(this)
@@ -34,32 +32,43 @@ class App extends Component {
     this.createTeam = this.createTeam.bind(this)
   }
 
+
+
   componentWillMount() {
-    this.ref = base.syncState('capoState', {
+    this.teamsRef = base.syncState('teams', {
       context: this,
-      state: 'capoState',
-      asArray: true
-    }, () => {
-      this.setState({loading: false})
+      state: 'teams',
+      asArray: true,
+      then: () => {
+        this.fixturesRef = base.syncState('fixtures', {
+          context: this,
+          state: 'fixtures',
+          asArray: true,
+          then: () => {
+            this.setState({loading: false})
+          }
+        })
+      }
     })
   }
 
   componentWillUnmount() {
-    base.removeBinding(this.ref)
+    base.removeBinding(this.teamsRef)
+    base.removeBinding(this.fixturesRef)
   }
 
   // AUTH METHODS
   authenticate() {
-    var provider = new firebase.auth.FacebookAuthProvider();
+    var provider = new firebase.auth.FacebookAuthProvider()
     firebase.auth().signInWithPopup(provider).then((user) => {
       this.authHandler(null, user)
-    });
+    })
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) this.authHandler(null, user)
-    });
+    })
   }
 
   authHandler(err, user) {
@@ -75,20 +84,22 @@ class App extends Component {
     }).catch((error) => console.log(error));
     this.props.history.push("/")
   }
-
+  //
   createTeam(teamObj) {
-    const capoState = [...this.state.capoState]
-    const teams = capoState.teams
+    const teams = this.state.teams
     teams.push(teamObj)
     this.setState({
-      capoState
+      teams
     })
   }
 
+  // createTeam(teamObj) {
+  //   db.ref('teams').push( teamObj );
+  // }
+
   userBelongsToATeam() {
-    const teams = this.state.capoState.teams
+    const teams = this.state.teams
     const uid = this.state.uid
-    if (!teams) return
     for (var i = 0; i < teams.length; i++) {
       if (teams[i].players.includes(uid)) {
         console.log('I am in a team!', teams[i])
@@ -100,6 +111,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.loading)
     if (this.state.loading) return <Loading />
 
     return (

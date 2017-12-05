@@ -1,6 +1,5 @@
 import React from 'react'
 import randomID from 'random-id'
-import FontAwesome from 'react-fontawesome'
 import firebase from 'firebase';
 import FileUploader from 'react-firebase-file-uploader';
 
@@ -25,11 +24,14 @@ export default class Onboarding extends React.Component {
   }
 
   handleUploadStart = () => this.setState({isUploading: true, progress: 0});
+
   handleProgress = (progress) => this.setState({progress});
+
   handleUploadError = (error) => {
     this.setState({isUploading: false});
     console.error(error);
   }
+
   handleUploadSuccess = (filename) => {
     this.setState({badge: filename, progress: 100, isUploading: false});
     firebase.storage().ref('images').child(filename).getDownloadURL().then(url => this.setState({badgeURL: url}));

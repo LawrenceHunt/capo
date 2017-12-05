@@ -30,14 +30,11 @@ class Login extends React.Component {
   }
 
   render() {
-    console.log("I'm checking for user ID")
     if (!this.props.uid) {
-      console.log(this.props.uid)
       return this.renderLoginpage()
     }
 
     if (!this.props.userBelongsToATeam) {
-      console.log('ONBOARDING:', this.props.uid)
       return this.renderRedirectToOnboarding()
     }
     return this.renderRedirectToFixtures()
