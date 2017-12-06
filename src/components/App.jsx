@@ -123,8 +123,16 @@ class App extends Component {
           />
         )}
         />
+
+      <Route path="/fixtures" render={() => (
+        <Fixtures
+          fixures={this.state.fixtures}
+          logout={this.logout}
+        />
+      )}
+      />
+
         <Route path="/team" render={() => <Team logout={this.logout} />} />
-        <Route path="/fixtures" render={() => <Fixtures logout={this.logout} />} />
         <Route path="/table" render={() => <Table logout={this.logout} /> } />
       </div>
     );
