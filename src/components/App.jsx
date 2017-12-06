@@ -82,7 +82,7 @@ class App extends Component {
     }).catch((error) => console.log(error));
     this.props.history.push("/")
   }
-  //
+
   createTeam(teamObj) {
     const teams = this.state.teams
     teams.push(teamObj)

@@ -175,7 +175,7 @@ export default class Onboarding extends React.Component {
         <div>{this.player_names ? this.player_names[0] : 'You need to add a captain!'}</div>
         <h2>Your Squad:</h2>
         <div>{this.player_names ? this.player_names.map((player) => <div key={player}>{player}</div>) : 'You need to add your players!'}</div>
-        <div className="uploadTeam" onClick={(e) => this.uploadToFirebase(e)}>Submit My Team</div>
+        <button className="uploadTeam" onClick={(e) => this.uploadToFirebase(e)}>Submit My Team</button>
       </div>
 
     )
