@@ -13,7 +13,7 @@ export default class Onboarding extends React.Component {
       step: 1,
       isUploading: false,
       progress: null,
-      inputs: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5']
+      inputs: ['Captain', 'Player 2', 'Player 3', 'Player 4', 'Player 5']
     }
 
     this.previousStep = this.previousStep.bind(this)
@@ -53,9 +53,9 @@ export default class Onboarding extends React.Component {
   nextStep(e) {
     e.preventDefault()
     if (this.formInput) {
-      this.name = this.formInput.value
+      this.team_name = this.formInput.value
       this.player_ids = [this.props.uid]
-      this.captains = [this.props.uid]
+      this.captains_ids = [this.props.uid]
     }
     this.setState({step: this.state.step + 1})
   }
@@ -66,10 +66,17 @@ export default class Onboarding extends React.Component {
   }
 
   finaliseSquad(e) {
-    const inputs = Array.from(document.getElementsByClassName('player'))
-    this.player_names = [];
-    inputs.forEach((input) => {
-        if (input.value !== '') this.player_names.push(input.value);
+    const nameInputs = Array.from(document.getElementsByClassName('player'))
+    const emailInputs = Array.from(document.getElementsByClassName('player-email'))
+    this.player_names = []
+    this.player_emails = []
+    this.captains_names = []
+    this.captains_names.push(nameInputs[0].value)
+    nameInputs.forEach((input) => {
+        if (input.value !== '') this.player_names.push(input.value)
+    });
+    emailInputs.forEach((input) => {
+        if (input.value !== '') this.player_emails.push(input.value)
     });
     this.setState({step: this.state.step + 1})
   }
@@ -82,12 +89,15 @@ export default class Onboarding extends React.Component {
     e.preventDefault()
     const teamObj = {
       id: this.state.id,
-      team_name: this.name,
-      player_names: this.players,
+      team_name: this.team_name,
+      player_names: this.player_names,
       player_ids: this.player_ids,
-      captains: this.captains,
+      player_emails: this.player_emails,
+      captains_ids: this.captains_ids,
+      captains_names: this.captains_names,
       badge: this.badge
     }
+    console.log('Submitting')
     this.props.createTeam(teamObj)
   }
 
@@ -109,7 +119,7 @@ export default class Onboarding extends React.Component {
     const teamBadge = (
       <div>
         <form>
-          <label>Badge for {this.name}:</label>
+          <label>Badge for {this.team_name}:</label>
           {this.state.isUploading &&
             <p>Progress: {this.state.progress}</p>
           }
@@ -137,23 +147,44 @@ export default class Onboarding extends React.Component {
     const teamPlayers = (
       <div>
         <h2 className="squad-header">Pick your squad (make sure to include yourself!)</h2>
-        <form className="pick-squad">
-          <div className="player-names">
-            {this.state.inputs.map(input => <input type="text" className="player" key={input} placeholder={input} />)}
+        <form>
+          <div className="pick-squad">
+            <div className="player-names">
+              {this.state.inputs.map(input => <input type="text" className="player" key={input} placeholder={input} />)}
+            </div>
+            <div className="player-emails">
+              {this.state.inputs.map(input => <input type="text" className="player-email" key={input + ' Email'} placeholder={input + ' Email'} />)}
+            </div>
           </div>
-          <div className="player-emails">
-            {this.state.inputs.map(input => <input type="text" className="player-email" key={input + ' Email'} placeholder={input + ' Email'} />)}
+          <div className="onboarding-buttons">
+            <input type="button" value="Add More Players" onClick={this.addPlayer} />
+            <input type="button" value="Finalise Squad" onClick={(e) => this.finaliseSquad(e)} />
           </div>
-          <input className="onboarding-button" type="button" value="Add More Players" onClick={this.addPlayer} />
-          <input className="onboarding-button" type="button" value="Finalise Squad" onClick={(e) => this.finaliseSquad(e)} />
         </form>
       </div>
+    )
+
+    const confirmation = (
+      <div className="confirmation">
+        {/* Show team name, captain, badge and players */}
+        <h2>Your Team Name:</h2>
+        <div>{this.team_name}</div>
+        <h2>Your Team Badge:</h2>
+        <img src={this.state.badgeURL} />
+        <h2>Your Team Captain:</h2>
+        <div>{this.player_names ? this.player_names[0] : 'You need to add a captain!'}</div>
+        <h2>Your Squad:</h2>
+        <div>{this.player_names ? this.player_names.map((player) => <div key={player}>{player}</div>) : 'You need to add your players!'}</div>
+        <div className="uploadTeam" onClick={(e) => this.uploadToFirebase(e)}>Submit My Team</div>
+      </div>
+
     )
 
     const createTeamViews = {
       1: teamName,
       2: teamBadge,
-      3: teamPlayers
+      3: teamPlayers,
+      4: confirmation
     }
 
     return createTeamViews[this.state.step]
