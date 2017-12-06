@@ -12,10 +12,12 @@ export default class Onboarding extends React.Component {
       id: randomID(10),
       step: 1,
       isUploading: false,
-      progress: null
+      progress: null,
+      inputs: ['Player 1', 'Player 2', 'Player 3', 'Player 4', 'Player 5']
     }
 
     this.previousStep = this.previousStep.bind(this)
+    this.addPlayer = this.addPlayer.bind(this)
   }
 
   handleUploadStart = () => {
@@ -50,11 +52,25 @@ export default class Onboarding extends React.Component {
 
   nextStep(e) {
     e.preventDefault()
-    if (this.formInput.value) {
+    if (this.formInput) {
       this.name = this.formInput.value
-      this.players = [this.props.uid]
+      this.player_ids = [this.props.uid]
       this.captains = [this.props.uid]
     }
+    this.setState({step: this.state.step + 1})
+  }
+
+  addPlayer() {
+    const newPlayer = `Player ${this.state.inputs.length + 1}`
+    this.setState({ inputs: this.state.inputs.concat([newPlayer])})
+  }
+
+  finaliseSquad(e) {
+    const inputs = Array.from(document.getElementsByClassName('player'))
+    this.player_names = [];
+    inputs.forEach((input) => {
+        if (input.value !== '') this.player_names.push(input.value);
+    });
     this.setState({step: this.state.step + 1})
   }
 
@@ -66,8 +82,9 @@ export default class Onboarding extends React.Component {
     e.preventDefault()
     const teamObj = {
       id: this.state.id,
-      name: this.name,
-      players: this.players,
+      team_name: this.name,
+      player_names: this.players,
+      player_ids: this.player_ids,
       captains: this.captains,
       badge: this.badge
     }
@@ -80,12 +97,11 @@ export default class Onboarding extends React.Component {
       <div>
         <label>Name Your Team</label>
         <form
-          ref={(input) => this.createTeamForm = input}
-          className="create-team"
+          className="team-name"
           onSubmit={(e) => this.nextStep(e)}
         >
           <input type="text" ref={(input) => this.formInput = input} placeholder="Team Name" />
-          <input type="button" value="Next Step" onClick={(e) => this.nextStep(e)} />
+          <input type="button" value="Next" onClick={(e) => this.nextStep(e)} />
         </form>
       </div>
     )
@@ -112,15 +128,32 @@ export default class Onboarding extends React.Component {
             maxHeight={200}
             maxWidth={200}
           />
-          <input type="button" value="Previous Step" onClick={this.previousStep} />
-          <input type="button" value="Finish" onClick={(e) => this.uploadToFirebase(e)} />
+          <input type="button" value="Previous" onClick={this.previousStep} />
+          <input type="button" value="Next" onClick={(e) => this.nextStep(e)} />
+        </form>
+      </div>
+    )
+
+    const teamPlayers = (
+      <div>
+        <h2 className="squad-header">Pick your squad (make sure to include yourself!)</h2>
+        <form className="pick-squad">
+          <div className="player-names">
+            {this.state.inputs.map(input => <input type="text" className="player" key={input} placeholder={input} />)}
+          </div>
+          <div className="player-emails">
+            {this.state.inputs.map(input => <input type="text" className="player-email" key={input + ' Email'} placeholder={input + ' Email'} />)}
+          </div>
+          <input className="onboarding-button" type="button" value="Add More Players" onClick={this.addPlayer} />
+          <input className="onboarding-button" type="button" value="Finalise Squad" onClick={(e) => this.finaliseSquad(e)} />
         </form>
       </div>
     )
 
     const createTeamViews = {
       1: teamName,
-      2: teamBadge
+      2: teamBadge,
+      3: teamPlayers
     }
 
     return createTeamViews[this.state.step]
