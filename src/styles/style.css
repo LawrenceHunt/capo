@@ -47,6 +47,25 @@
   -webkit-transform: translateY(-100%);
           transform: translateY(-100%);
 }
+button {
+  border-radius: 5%;
+  background: none;
+  color: #fff;
+  display: inline-block;
+  padding: 10px;
+  margin: 10px;
+}
+button:hover {
+  color: #000;
+  background: #fff;
+  opacity: 0.5;
+}
+button .btn-large {
+  font-size: 30px;
+}
+button .btn-outline {
+  border: 1px solid #fff;
+}
 .loading-screen {
   text-align: center;
 }
@@ -151,6 +170,58 @@ a:visited {
 .mvp {
   color: #ffd700;
 }
+.fixtures-toolbar {
+  width: 100%;
+  margin-top: 20px;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: row;
+      -ms-flex: row;
+          flex: row;
+}
+.fixtures-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: row;
+      -ms-flex: row;
+          flex: row;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background: #f00;
+  width: 100%;
+  margin: 20px;
+  height: 100%;
+  clear: both;
+}
+.fixtures-control {
+  width: 10%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: row;
+      -ms-flex: row;
+          flex: row;
+  margin-top: 30px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.fixtures-control button {
+  padding: 10px;
+}
+.fixtures-control.left {
+  float: left;
+}
+.fixtures-control.right {
+  float: right;
+}
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 body {
@@ -162,12 +233,15 @@ body {
   font-family: 'Comfortaa', cursive;
 }
 h1 {
-  font-size: 100px;
+  font-size: 30px;
 }
 .main-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 a {
   cursor: pointer;
@@ -186,12 +260,15 @@ body {
   font-family: 'Comfortaa', cursive;
 }
 h1 {
-  font-size: 100px;
+  font-size: 30px;
 }
 .main-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 a {
   cursor: pointer;
