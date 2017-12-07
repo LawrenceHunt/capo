@@ -97,6 +97,7 @@ class App extends Component {
     const uid = this.state.uid
     for (var i = 0; i < teams.length; i++) {
       if (teams[i].player_ids.includes(uid)) {
+        console.log(teams[i].id)
         return true
       }
     }
