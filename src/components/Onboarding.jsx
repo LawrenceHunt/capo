@@ -17,7 +17,6 @@ export default class Onboarding extends React.Component {
     }
 
     this.previousStep = this.previousStep.bind(this)
-    this.addPlayer = this.addPlayer.bind(this)
     this.createTeam = this.createTeam.bind(this)
     this.joinTeam = this.joinTeam.bind(this)
   }
@@ -70,7 +69,8 @@ export default class Onboarding extends React.Component {
     this.setState({step: this.state.step + 1})
   }
 
-  addPlayer() {
+  addPlayer(e) {
+    e.preventDefault()
     const newPlayer = `Player ${this.state.inputs.length + 1}`
     this.setState({ inputs: this.state.inputs.concat([newPlayer])})
   }
@@ -195,7 +195,7 @@ export default class Onboarding extends React.Component {
             )}
           </div>
           <div className="onboarding-item">
-            <button className="btn-large btn-outline" onClick={this.addPlayer}>Add More Players</button>
+            <button className="btn-large btn-outline" onClick={(e) => this.addPlayer(e)}>Add More Players</button>
             <button className="btn-large btn-outline" onClick={(e) => this.finaliseSquad(e)}>Finalise Squad</button>
           </div>
         </form>
