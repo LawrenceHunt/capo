@@ -176,7 +176,7 @@ export default class Onboarding extends React.Component {
         <h2>Your Team Name:</h2>
         <div>{this.team_name}</div>
         <h2>Your Team Badge:</h2>
-        <img src={this.state.badgeURL} />
+        <img src={this.state.badgeURL} alt="team badge" />
         <h2>Your Team Captain:</h2>
         <div>{this.player_names ? this.player_names[0] : 'You need to add a captain!'}</div>
         <h2>Your Squad:</h2>

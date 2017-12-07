@@ -89,16 +89,20 @@ class App extends Component {
     this.setState({
       teams
     })
-    this.props.history.push("/")
+    this.props.history.push("/fixtures")
   }
 
   userBelongsToATeam() {
     const teams = this.state.teams
+    console.log(teams)
     const uid = this.state.uid
+    console.log(uid)
     for (var i = 0; i < teams.length; i++) {
-      if (teams[i].players.includes(uid)) {
+      if (teams[i].player_ids.includes(uid)) {
+        console.log('GOT THE FUCKER')
         return true
       } else {
+        console.log('NO CHANCE MATE')
         return false
       }
     }
