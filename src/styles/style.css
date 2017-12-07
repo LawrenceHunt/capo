@@ -304,6 +304,86 @@ a:visited {
   color: #fff;
   border: 1px dashed #fff;
 }
+.pick-squad {
+  display: grid;
+  grid-template-columns: 2;
+  margin: auto;
+  min-width: 320px;
+  width: 47vw;
+  font-family: 'Comfortaa', cursive;
+}
+.uploader {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 100vh;
+  line-height: 100px;
+}
+.uploader label {
+  font-size: 1.4em;
+}
+.uploader label span {
+  color: #f00;
+}
+.uploader-title,
+.uploader-content,
+.uploader-next {
+  margin: auto;
+}
+.player-names {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+.player-names input {
+  width: 20vw;
+  min-width: 120px;
+  padding: 10px;
+  margin: 5px;
+  font-family: 'Comfortaa', cursive;
+}
+.player-emails {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+.player-emails input {
+  width: 20vw;
+  min-width: 120px;
+  padding: 10px;
+  margin: 5px;
+  font-family: 'Comfortaa', cursive;
+}
+.squad-header {
+  text-align: center;
+  margin: auto;
+}
+.confirmation-buttons {
+  margin: auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  min-width: 320px;
+  width: 50vw;
+}
+.confirmation-buttons input {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  font-family: 'Comfortaa', cursive;
+}
+.confirmation {
+  text-align: center;
+}
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 body {
