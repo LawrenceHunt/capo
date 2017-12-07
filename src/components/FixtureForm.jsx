@@ -2,31 +2,30 @@ import React from 'react'
 import DatePicker from 'react-datepicker'
 import moment from 'moment'
 import 'react-datepicker/dist/react-datepicker.css'
-
-
+window.moment = moment
 export default class FixtureForm extends React.Component {
 
   constructor() {
     super()
     this.state = {
-      date: moment().unix(),
+      date: moment(+new Date()),
       vs: ""
     }
   }
 
   handleDateChange(date) {
-    this.setState({date})
+    this.setState({date: date.unix()})
   }
 
   handleVsChange(e) {
-    console.log(e)
     e.preventDefault()
+    console.log(e.value)
     this.setState({vs: e.value})
   }
 
   handleSubmit() {
     const fixtureObj = {
-      date: this.state.date.unix(),
+      date: this.state.date,
       vs: this.state.vs
     }
     console.log(fixtureObj)
@@ -44,7 +43,7 @@ export default class FixtureForm extends React.Component {
 
         <h2>Date:</h2>
         <DatePicker
-          selected={this.state.date}
+          selected={moment(this.state.date)}
           onChange={(date) => this.handleDateChange(date)}
           showTimeSelect
           dateFormat="LLL"
@@ -54,7 +53,6 @@ export default class FixtureForm extends React.Component {
         <input
           type="text"
           name="vs"
-          value={this.state.vs}
           onChange={(e) => this.handleVsChange(e) }
         ></input>
 
