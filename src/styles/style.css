@@ -315,71 +315,39 @@ a:visited {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
   height: 100vh;
+  overflow: scroll;
 }
 .onboarding-item {
   text-align: center;
+  line-height: 50px;
 }
-.pick-squad {
-  display: grid;
-  grid-template-columns: 2;
-  margin: auto;
-  min-width: 320px;
-  width: 47vw;
-  font-family: 'Comfortaa', cursive;
+.onboarding-item span {
+  color: #f00;
 }
-.uploader {
+.onboarding-input {
+  border-radius: 5%;
+  background: none;
+  color: #fff;
+  padding: 10px;
+  margin: 10px;
+}
+.badge-uploader {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: 100vh;
-  line-height: 100px;
+  margin: 30px auto 30px auto;
 }
-.uploader label {
-  font-size: 1.4em;
-}
-.uploader label span {
-  color: #f00;
-}
-.uploader-title,
-.uploader-content,
-.uploader-next {
-  margin: auto;
-}
-.player-names {
-  grid-column-start: 1;
-  grid-column-end: 2;
-}
-.player-names input {
-  width: 20vw;
-  min-width: 120px;
-  padding: 10px;
-  margin: 5px;
-  font-family: 'Comfortaa', cursive;
-}
-.player-emails {
-  grid-column-start: 2;
-  grid-column-end: 3;
-}
-.player-emails input {
-  width: 20vw;
-  min-width: 120px;
-  padding: 10px;
-  margin: 5px;
-  font-family: 'Comfortaa', cursive;
-}
-.squad-header {
+.badge-uploader * {
   text-align: center;
-  margin: auto;
+}
+.badge-uploader img {
+  max-width: 200px;
+  margin: 20px auto 20px auto;
 }
 .confirmation-buttons {
   margin: auto;

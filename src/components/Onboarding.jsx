@@ -128,31 +128,33 @@ export default class Onboarding extends React.Component {
     )
 
     const findTeam = (
-      <div>
-        I'm gonna find a team for you!
+      <div className="onboarding-container">
+        <div className="onboarding-item">
+          I'm gonna find a team for you!
+        </div>
       </div>
     )
 
     const teamName = (
-      <div>
-        <label>Name Your Team</label>
+      <div className="onboarding-container">
+        <label className="onboarding-item">Name Your Team</label>
         <form
-          className="team-name"
+          className="onboarding-item"
           onSubmit={(e) => this.nextStep(e)}
         >
-          <input type="text" ref={(input) => this.formInput = input} placeholder="Team Name" required />
-          <input type="submit" value="Next" onSubmit={(e) => this.nextStep(e)} />
+          <input type="text" className="onboarding-input" ref={(input) => this.formInput = input} placeholder="Team Name" required />
+          <button type="submit" className="btn-large btn-outline" onSubmit={(e) => this.nextStep(e)}>Next</button>
         </form>
       </div>
     )
 
     const teamBadge = (
       <div>
-        <form className="uploader">
-          <div className="uploader-title">
+        <form className="onboarding-container">
+          <div className="onboarding-item">
             <label>Please upload your badge for <span>{this.team_name}</span> : </label>
           </div>
-          <div className="uploader-content">
+          <div className="onboarding-item badge-uploader">
             {this.state.isUploading &&
               <p>Progress: {this.state.progress}</p>
             }
@@ -172,46 +174,55 @@ export default class Onboarding extends React.Component {
               maxWidth={200}
             />
           </div>
-          <div className="uploader-next">
-            <input type="button" value="Previous" onClick={this.previousStep} />
-            <input type="button" value="Next" onClick={(e) => this.nextStep(e)} />
+          <div className="onboarding-item">
+            <button className="btn-large btn-outline" onClick={(e) => this.previousStep(e)}>Previous</button>
+            <button type="submit" className="btn-large btn-outline" onClick={(e) => this.nextStep(e)}>Next</button>
           </div>
         </form>
       </div>
     )
 
     const teamPlayers = (
-      <div>
-        <h2 className="squad-header">Pick your squad (make sure to include yourself!)</h2>
+      <div className="onboarding-container">
+        <h2 className="onboarding-item">Pick your squad (make sure to include yourself!)</h2>
         <form>
-          <div className="pick-squad">
-            <div className="player-names">
-              {this.state.inputs.map(input => <input type="text" className="player" key={input} placeholder={input} />)}
-            </div>
-            <div className="player-emails">
-              {this.state.inputs.map(input => <input type="text" className="player-email" key={input + ' Email'} placeholder={input + ' Email'} />)}
-            </div>
+          <div className="onboarding-item">
+            {this.state.inputs.map(input =>
+              <div>
+                <input type="text" className="onboarding-input player" key={input} placeholder={input} />
+                <input type="text" className="onboarding-input player-email" key={input + ' Email'} placeholder={input + ' Email'} />
+              </div>
+            )}
           </div>
-          <div className="confirmation-buttons">
-            <input type="button" value="Add More Players" onClick={this.addPlayer} />
-            <input type="button" value="Finalise Squad" onClick={(e) => this.finaliseSquad(e)} />
+          <div className="onboarding-item">
+            <button className="btn-large btn-outline" onClick={this.addPlayer}>Add More Players</button>
+            <button className="btn-large btn-outline" onClick={(e) => this.finaliseSquad(e)}>Finalise Squad</button>
           </div>
         </form>
       </div>
     )
 
     const confirmation = (
-      <div className="confirmation">
-        {/* Show team name, captain, badge and players */}
-        <h2>Your Team Name:</h2>
-        <div>{this.team_name}</div>
-        <h2>Your Team Badge:</h2>
-        <img src={this.state.badgeURL} alt="team badge" />
-        <h2>Your Team Captain:</h2>
-        <div>{this.player_names ? this.player_names[0] : 'You need to add a captain!'}</div>
-        <h2>Your Squad:</h2>
-        <div>{this.player_names ? this.player_names.map((player) => <div key={player}>{player}</div>) : 'You need to add your players!'}</div>
-        <button className="uploadTeam" onClick={(e) => this.uploadToFirebase(e)}>Submit My Team</button>
+      <div className="onboarding-container">
+        <div className="onboarding-item">
+          <h2>Your Team Name:</h2>
+          <div>{this.team_name}</div>
+        </div>
+        <div className="onboarding-item">
+          <h2>Your Team Badge:</h2>
+          <img src={this.state.badgeURL} alt="team badge" />
+        </div>
+        <div className="onboarding-item">
+          <h2>Your Team Captain:</h2>
+          <div>{this.player_names ? this.player_names[0] : 'You need to add a captain!'}</div>
+        </div>
+        <div className="onboarding-item">
+          <h2>Your Squad:</h2>
+          <div>{this.player_names ? this.player_names.map((player) => <div key={player}>{player}</div>) : 'You need to add your players!'}</div>
+        </div>
+        <div className="onboarding-item">
+          <button className="btn-large btn-outline" onClick={(e) => this.uploadToFirebase(e)}>Submit My Team</button>
+        </div>
       </div>
 
     )
