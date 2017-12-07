@@ -18,6 +18,16 @@ export default class Onboarding extends React.Component {
 
     this.previousStep = this.previousStep.bind(this)
     this.addPlayer = this.addPlayer.bind(this)
+    this.createTeam = this.createTeam.bind(this)
+    this.joinTeam = this.joinTeam.bind(this)
+  }
+
+  joinTeam() {
+    this.setState({ step: this.state.step + 1 })
+  }
+
+  createTeam() {
+    this.setState({ step: this.state.step + 2 })
   }
 
   handleUploadStart = () => {
@@ -103,6 +113,26 @@ export default class Onboarding extends React.Component {
 
   render() {
 
+    const createOrJoin = (
+      <div className="onboarding-container">
+        <h2 className="onboarding-item">Create a new team or join an existing one</h2>
+        <form>
+          <div className="onboarding-item">
+            <button className="btn-large btn-outline" onClick={this.createTeam}>Create Team</button>
+          </div>
+          <div className="onboarding-item">
+            <button className="btn-large btn-outline" onClick={this.joinTeam}>Join Team</button>
+          </div>
+        </form>
+      </div>
+    )
+
+    const findTeam = (
+      <div>
+        I'm gonna find a team for you!
+      </div>
+    )
+
     const teamName = (
       <div>
         <label>Name Your Team</label>
@@ -187,10 +217,12 @@ export default class Onboarding extends React.Component {
     )
 
     const createTeamViews = {
-      1: teamName,
-      2: teamBadge,
-      3: teamPlayers,
-      4: confirmation
+      1: createOrJoin,
+      2: findTeam,
+      3: teamName,
+      4: teamBadge,
+      5: teamPlayers,
+      6: confirmation
     }
 
     return createTeamViews[this.state.step]
