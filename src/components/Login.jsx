@@ -30,6 +30,8 @@ class Login extends React.Component {
   }
 
   render() {
+    console.log('belongs?', this.props.userBelongsToATeam)
+
     if (!this.props.uid) {
       return this.renderLoginpage()
     }

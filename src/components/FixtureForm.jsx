@@ -9,7 +9,7 @@ export default class FixtureForm extends React.Component {
   constructor() {
     super()
     this.state = {
-      date: moment(),
+      date: moment().unix(),
       vs: ""
     }
   }
@@ -35,31 +35,28 @@ export default class FixtureForm extends React.Component {
 
   render() {
 
-    const dateFormat = ("MMMM Do YYYY")
-    const timeFormat = ("h:mm:ss a")
+    // const dateFormat = ("MMMM Do YYYY")
+    // const timeFormat = ("h:mm:ss a")
 
     return (
       <div className="fixture-form">
         <h1>Create a new fixture for:</h1>
-        <span>
-          Date:
-          <DatePicker
-            selected={this.state.date}
-            onChange={(date) => this.handleDateChange(date)}
-            showTimeSelect
-            dateFormat="LLL"
-          />
-        </span>
 
-      <span>
-        Vs:
+        <h2>Date:</h2>
+        <DatePicker
+          selected={this.state.date}
+          onChange={(date) => this.handleDateChange(date)}
+          showTimeSelect
+          dateFormat="LLL"
+        />
+
+        <h2>Vs:</h2>
         <input
           type="text"
           name="vs"
           value={this.state.vs}
           onChange={(e) => this.handleVsChange(e) }
         ></input>
-      </span>
 
         <button
           className="btn-large btn-outline"
