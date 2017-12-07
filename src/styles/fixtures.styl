@@ -1,28 +1,7 @@
-
-.fixtures-toolbar
-  width 100%
-  margin-top 20px
-  align-self flex-start
-  display flex
-  flex row
-
-
-.fixtures-container
-  display flex
-  flex row
-  align-self flex-start
-  justify-content center
-  background red
-  width 100%
-  margin 20px
-  height 100%
-  clear both
-
 .fixtures-control
   width: 10%
   display flex
-  flex row
-  margin-top 30px
+  flex-direction row
   justify-content center
 
   button
@@ -32,3 +11,42 @@
     float left
   &.right
     float right
+
+.fixtures-container
+  align-self flex-start
+  display flex
+  width 80%
+  flex-wrap wrap
+  justify-content center
+
+  .fixtures-toolbar
+    width 100%
+    margin-top 20px
+    align-self flex-start
+    display flex
+    justify-content center
+    flex row
+
+    button
+      margin 10px
+
+  .fixture-form
+    border 1px dashed white
+    width 80%
+    display flex
+    flex-direction column
+    align-items center
+    padding-top 30px
+    padding-bottom 30px
+
+    button, input, label
+      margin 10px
+
+    input
+      padding: 20px
+      font-size: 20px
+      width: 60%
+      text-align: center
+      background: none
+      color: white
+      border: 1px dashed white

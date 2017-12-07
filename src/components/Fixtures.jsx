@@ -40,27 +40,31 @@ class Fixtures extends React.Component {
           </button>
         </div>
 
-        <div className="fixtures-toolbar">
-          {
-            this.state.makingNewFixture ? (
-              <button
-                className="btn-large btn-outline"
-                onClick={() => this.cancelFixtureForm()}
-              >Cancel</button>
-            ) : (
-              <button
-                className="btn-large btn-outline"
-                onClick={() => this.showFixtureForm()}
-              >New Fixture</button>
-            )
-          }
-        </div>
+        <div className="fixtures-container">
 
-        {
-          this.state.makingNewFixture ?
-          ( <FixtureForm /> ) :
-          ( <Fixture /> )
-        }
+          <div className="fixtures-toolbar">
+            {
+              this.state.makingNewFixture ? (
+                <button
+                  className="btn-large btn-outline"
+                  onClick={() => this.cancelFixtureForm()}
+                >Cancel</button>
+              ) : (
+                <button
+                  className="btn-large btn-outline"
+                  onClick={() => this.showFixtureForm()}
+                ><FontAwesome name="plus" />New Fixture</button>
+              )
+            }
+          </div>
+
+          {
+            this.state.makingNewFixture ?
+            ( <FixtureForm /> ) :
+            ( <Fixture /> )
+          }
+
+        </div>
 
         <div className="fixtures-control right">
           <button className="btn-large btn-outline">
