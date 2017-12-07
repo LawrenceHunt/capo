@@ -89,6 +89,7 @@ class App extends Component {
     this.setState({
       teams
     })
+    this.props.history.push("/")
   }
 
   userBelongsToATeam() {

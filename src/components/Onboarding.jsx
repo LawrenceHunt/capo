@@ -110,36 +110,42 @@ export default class Onboarding extends React.Component {
           className="team-name"
           onSubmit={(e) => this.nextStep(e)}
         >
-          <input type="text" ref={(input) => this.formInput = input} placeholder="Team Name" />
-          <input type="button" value="Next" onClick={(e) => this.nextStep(e)} />
+          <input type="text" ref={(input) => this.formInput = input} placeholder="Team Name" required />
+          <input type="submit" value="Next" onSubmit={(e) => this.nextStep(e)} />
         </form>
       </div>
     )
 
     const teamBadge = (
       <div>
-        <form>
-          <label>Badge for {this.team_name}:</label>
-          {this.state.isUploading &&
-            <p>Progress: {this.state.progress}</p>
-          }
-          {this.state.badgeURL &&
-            <img src={this.state.badgeURL} alt={`${this.state.badgeUrl}`}/>
-          }
-          <FileUploader
-            accept="image/*"
-            name="badge"
-            filename={this.state.id}
-            storageRef={firebase.storage().ref('images')}
-            onUploadStart={this.handleUploadStart}
-            onUploadError={this.handleUploadError}
-            onUploadSuccess={this.handleUploadSuccess}
-            onProgress={this.handleProgress}
-            maxHeight={200}
-            maxWidth={200}
-          />
-          <input type="button" value="Previous" onClick={this.previousStep} />
-          <input type="button" value="Next" onClick={(e) => this.nextStep(e)} />
+        <form className="uploader">
+          <div className="uploader-title">
+            <label>Please upload your badge for <span>{this.team_name}</span> : </label>
+          </div>
+          <div className="uploader-content">
+            {this.state.isUploading &&
+              <p>Progress: {this.state.progress}</p>
+            }
+            {this.state.badgeURL &&
+              <img src={this.state.badgeURL} alt={`${this.state.badgeUrl}`}/>
+            }
+            <FileUploader
+              accept="image/*"
+              name="badge"
+              filename={this.state.id}
+              storageRef={firebase.storage().ref('images')}
+              onUploadStart={this.handleUploadStart}
+              onUploadError={this.handleUploadError}
+              onUploadSuccess={this.handleUploadSuccess}
+              onProgress={this.handleProgress}
+              maxHeight={200}
+              maxWidth={200}
+            />
+          </div>
+          <div className="uploader-next">
+            <input type="button" value="Previous" onClick={this.previousStep} />
+            <input type="button" value="Next" onClick={(e) => this.nextStep(e)} />
+          </div>
         </form>
       </div>
     )
@@ -156,7 +162,7 @@ export default class Onboarding extends React.Component {
               {this.state.inputs.map(input => <input type="text" className="player-email" key={input + ' Email'} placeholder={input + ' Email'} />)}
             </div>
           </div>
-          <div className="onboarding-buttons">
+          <div className="confirmation-buttons">
             <input type="button" value="Add More Players" onClick={this.addPlayer} />
             <input type="button" value="Finalise Squad" onClick={(e) => this.finaliseSquad(e)} />
           </div>
