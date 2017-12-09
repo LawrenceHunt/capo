@@ -2,57 +2,31 @@
   display flex
   justify-content center
   flex-direction column
-  flex-wrap wrap
   height 100vh
+  overflow scroll
 
 .onboarding-item
   text-align center
+  line-height 50px
+  span
+    color red
 
-.pick-squad
-  display grid
-  grid-template-columns 2
-  margin auto
-  min-width 320px
-  width 47vw
-  font-family 'Comfortaa', cursive
+.onboarding-input
+  border-radius 5%
+  background none
+  color white
+  padding 10px
+  margin 10px
 
-.uploader
+.badge-uploader
   display flex
-  justify-content center
   flex-direction column
-  height 100vh
-  line-height 100px
-  label
-    font-size 1.4em
-    span
-      color red
-
-.uploader-title, .uploader-content, .uploader-next
-  margin auto
-
-.player-names
-  grid-column-start 1
-  grid-column-end 2
-  input
-    width 20vw
-    min-width 120px
-    padding 10px
-    margin 5px
-    font-family 'Comfortaa', cursive
-
-.player-emails
-  grid-column-start 2
-  grid-column-end 3
-  input
-    width 20vw
-    min-width 120px
-    padding 10px
-    margin 5px
-    font-family 'Comfortaa', cursive
-
-.squad-header
-  text-align center
-  margin auto
+  margin 30px auto 30px auto
+  *
+    text-align center
+  img
+    max-width 200px
+    margin 20px auto 20px auto
 
 .confirmation-buttons
   margin auto
