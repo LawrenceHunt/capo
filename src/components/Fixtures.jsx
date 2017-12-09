@@ -24,21 +24,38 @@ class Fixtures extends React.Component {
     this.setState({makingNewFixture: true})
   }
 
-  cancelFixtureForm() {
+  hideFixtureForm() {
     this.setState({makingNewFixture: false})
   }
 
+
   render() {
 
-    return (
-      <div className="main-container">
-        <NavBar logout={this.props.logout} />
-
+    const fixtureControlLeft = this.state.makingNewFixture
+    ? (null)
+    : (
         <div className="fixtures-control left">
           <button className="btn-large btn-outline">
             <FontAwesome name="chevron-left" size="2x"/>
           </button>
         </div>
+      )
+
+    const fixtureControlRight = this.state.makingNewFixture
+    ? (null)
+    : (
+        <div className="fixtures-control right">
+          <button className="btn-large btn-outline">
+            <FontAwesome name="chevron-right" size="2x"/>
+          </button>
+        </div>
+      )
+
+    return (
+      <div className="main-container">
+        <NavBar logout={this.props.logout} />
+
+        {fixtureControlLeft}
 
         <div className="fixtures-container">
 
@@ -47,7 +64,7 @@ class Fixtures extends React.Component {
               this.state.makingNewFixture ? (
                 <button
                   className="btn-large btn-outline"
-                  onClick={() => this.cancelFixtureForm()}
+                  onClick={() => this.hideFixtureForm()}
                 >Cancel</button>
               ) : (
                 <button
@@ -60,17 +77,17 @@ class Fixtures extends React.Component {
 
           {
             this.state.makingNewFixture ?
-            ( <FixtureForm /> ) :
+            ( <FixtureForm
+                createFixture={this.props.createFixture}
+                hideFixtureForm={this.hideFixtureForm}
+              />
+            ) :
             ( <Fixture /> )
           }
 
         </div>
 
-        <div className="fixtures-control right">
-          <button className="btn-large btn-outline">
-            <FontAwesome name="chevron-right" size="2x"/>
-          </button>
-        </div>
+        {fixtureControlRight}
       </div>
     )
   }

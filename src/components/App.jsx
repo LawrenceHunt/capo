@@ -22,26 +22,28 @@ class App extends Component {
     this.state = {
       loading: true,
       teams: [],
-      fixtures: []
+      fixtures: {},
+      currentlyViewingTeam: null
     }
 
     this.authenticate = this.authenticate.bind(this)
     this.authHandler = this.authHandler.bind(this)
     this.logout = this.logout.bind(this)
-    this.userBelongsToATeam = this.userBelongsToATeam.bind(this)
+    this.assignTeamIfUserBelongs = this.assignTeamIfUserBelongs.bind(this)
     this.createTeam = this.createTeam.bind(this)
+    this.createFixture = this.createFixture.bind(this)
+
   }
 
   componentWillMount() {
     this.teamsRef = base.syncState('teams', {
       context: this,
       state: 'teams',
-      asArray: true,
+
       then: () => {
         this.fixturesRef = base.syncState('fixtures', {
           context: this,
           state: 'fixtures',
-          asArray: true,
           then: () => {
             this.setState({loading: false})
           }
@@ -55,7 +57,8 @@ class App extends Component {
     base.removeBinding(this.fixturesRef)
   }
 
-  // AUTH METHODS
+
+  // USER AUTH HANDLING...
   authenticate() {
     var provider = new firebase.auth.FacebookAuthProvider()
     firebase.auth().signInWithPopup(provider).then((user) => {
@@ -71,9 +74,21 @@ class App extends Component {
 
   authHandler(err, user) {
     if (err) console.log(err)
+    const uid = user.uid
     this.setState({
-      uid: user.uid,
-    })
+      uid
+    }, this.assignTeamIfUserBelongs(uid))
+  }
+
+  assignTeamIfUserBelongs(uid) {
+    const teams = this.state.teams
+    const teamKeys = Object.keys(teams)
+
+    for (var i = 0; i < teamKeys.length; i++) {
+      if (teams[teamKeys[i]].player_ids.includes(uid)) {
+        this.setState({currentlyViewingTeam: teamKeys[i]})
+      }
+    }
   }
 
   logout() {
@@ -83,25 +98,29 @@ class App extends Component {
     this.props.history.push("/")
   }
 
+
+  // TEAMS....
   createTeam(teamObj) {
     const teams = this.state.teams
-    teams.push(teamObj)
+    teams[teamObj.id] = teamObj
     this.setState({
       teams
     })
     this.props.history.push("/fixtures")
   }
 
-  userBelongsToATeam() {
-    const teams = this.state.teams
-    const uid = this.state.uid
-    for (var i = 0; i < teams.length; i++) {
-      if (teams[i].player_ids.includes(uid)) {
-        console.log(teams[i].id)
-        return true
-      }
+
+  // FIXTURES.....
+  createFixture(fixtureObj) {
+    const fixtures = {...this.state.fixtures}
+    const teamId = this.state.viewingTeamId
+    const teamFixtures = fixtures[teamId]
+    if (!teamFixtures) {
+      fixtures[teamId] = [fixtureObj]
+    } else {
+      teamFixtures.push(fixtureObj)
     }
-    return false
+    this.setState({fixtures})
   }
 
   render() {
@@ -112,7 +131,7 @@ class App extends Component {
         <Route path="/" render={ () => (
           <Login
             uid={this.state.uid}
-            userBelongsToATeam={this.userBelongsToATeam()}
+            currentlyViewingTeam={this.state.currentlyViewingTeam}
             authenticate={this.authenticate}
           />) }
         />

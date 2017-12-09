@@ -18,9 +18,7 @@ export default class FixtureForm extends React.Component {
   }
 
   handleVsChange(e) {
-    e.preventDefault()
-    console.log(e.value)
-    this.setState({vs: e.value})
+    this.setState({vs: e.target.value})
   }
 
   handleSubmit() {
@@ -28,7 +26,8 @@ export default class FixtureForm extends React.Component {
       date: this.state.date,
       vs: this.state.vs
     }
-    console.log(fixtureObj)
+    this.props.createFixture(fixtureObj)
+    this.props.hideFixtureForm()
   }
 
 

@@ -272,7 +272,6 @@ a:visited {
   margin: 10px;
 }
 .fixtures-container .fixture-form {
-  border: 1px dashed #fff;
   width: 80%;
   display: -webkit-box;
   display: -ms-flexbox;
