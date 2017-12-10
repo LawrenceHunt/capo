@@ -121,6 +121,7 @@ class App extends Component {
           <Onboarding
             createTeam={this.createTeam}
             uid={this.state.uid}
+            teams={this.state.teams}
           />
         )}
         />

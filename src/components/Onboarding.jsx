@@ -13,12 +13,15 @@ export default class Onboarding extends React.Component {
       step: 1,
       isUploading: false,
       progress: null,
-      inputs: ['Captain', 'Player 2', 'Player 3', 'Player 4', 'Player 5']
+      inputs: ['Captain', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
+      displayTeams: []
     }
 
     this.previousStep = this.previousStep.bind(this)
     this.createTeam = this.createTeam.bind(this)
     this.joinTeam = this.joinTeam.bind(this)
+    this.teamSearch = this.teamSearch.bind(this)
+    this.selectTeam = this.selectTeam.bind(this)
   }
 
   joinTeam() {
@@ -27,6 +30,22 @@ export default class Onboarding extends React.Component {
 
   createTeam() {
     this.setState({ step: this.state.step + 2 })
+  }
+
+  teamSearch(e) {
+   const searchQuery = e.target.value.toLowerCase();
+   if (searchQuery !== '') {
+     const searchTeams = this.props.teams.map((team) => team.team_name.toLowerCase())
+      .filter((team) => team.indexOf(searchQuery) !== -1)
+     const displayTeams = searchTeams.map((team) => team.replace(/\w\S*/g, (txt) => {return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()}))
+     this.setState({ displayTeams })
+   } else {
+     this.setState({ displayTeams: [] })
+   }
+  }
+
+  selectTeam(e) {
+    
   }
 
   handleUploadStart = () => {
@@ -129,8 +148,10 @@ export default class Onboarding extends React.Component {
 
     const findTeam = (
       <div className="onboarding-container">
+        <h2 className="onboarding-item">Live search for your team below</h2>
         <div className="onboarding-item">
-          I'm gonna find a team for you!
+          <input type="text" className="onboarding-input" placeholder="Team Name" onChange={this.teamSearch} />
+          {this.state.displayTeams.map((team) => <div className="display-team" onClick={(e) => this.selectTeam(e)} key={team}>{team}</div>)}
         </div>
       </div>
     )
