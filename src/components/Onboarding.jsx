@@ -14,7 +14,8 @@ export default class Onboarding extends React.Component {
       isUploading: false,
       progress: null,
       inputs: ['Captain', 'Player 2', 'Player 3', 'Player 4', 'Player 5'],
-      displayTeams: []
+      displayTeams: [],
+      teamSelected: false
     }
 
     this.previousStep = this.previousStep.bind(this)
@@ -45,8 +46,11 @@ export default class Onboarding extends React.Component {
   }
 
   selectTeam(e) {
-    
+    console.log('LOOSER')
+    this.setState({ teamSelected: e.target.innerHTML })
   }
+
+
 
   handleUploadStart = () => {
     this.setState({
@@ -148,11 +152,26 @@ export default class Onboarding extends React.Component {
 
     const findTeam = (
       <div className="onboarding-container">
-        <h2 className="onboarding-item">Live search for your team below</h2>
-        <div className="onboarding-item">
-          <input type="text" className="onboarding-input" placeholder="Team Name" onChange={this.teamSearch} />
-          {this.state.displayTeams.map((team) => <div className="display-team" onClick={(e) => this.selectTeam(e)} key={team}>{team}</div>)}
-        </div>
+        {this.state.teamSelected
+          ?
+          <section>
+            <header className="onboarding-item">
+              <h2>{this.state.teamSelected}</h2>
+              <h2>Enter your team password else you ain't getting in</h2>
+            </header>
+            <section className="onboarding-item">
+              <input type="text" placeholder="Team Password" />
+            </section>
+          </section>
+          :
+          <section>
+            <h2 className="onboarding-item">Live search for your team below</h2>
+            <section className="onboarding-item">
+              <input type="text" className="onboarding-input" placeholder="Team Name" onChange={this.teamSearch} />
+              {this.state.displayTeams.map((team) => <div className="display-team" onClick={(e) => this.selectTeam(e)} key={team}>{team}</div>)}
+            </section>
+          </section>
+        }
       </div>
     )
 
@@ -209,9 +228,9 @@ export default class Onboarding extends React.Component {
         <form>
           <div className="onboarding-item">
             {this.state.inputs.map(input =>
-              <div>
-                <input type="text" className="onboarding-input player" key={input} placeholder={input} />
-                <input type="text" className="onboarding-input player-email" key={input + ' Email'} placeholder={input + ' Email'} />
+              <div key={input}>
+                <input type="text" className="onboarding-input player" placeholder={input} />
+                <input type="text" className="onboarding-input player-email" placeholder={input + ' Email'} />
               </div>
             )}
           </div>
