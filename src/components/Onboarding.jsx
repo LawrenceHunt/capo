@@ -170,9 +170,10 @@ export default class Onboarding extends React.Component {
           <section>
             <header className="onboarding-item">
               <h2><span>{this.state.teamSelected}</span></h2>
-              <h2>Enter your team password else you ain't getting in</h2>
+              <h2>Enter your email and team password and you're on the squad!</h2>
             </header>
             <section className="onboarding-item">
+              <input type="email" className="onboarding-input" placeholder="Your Email" />
               <input type="password" className="onboarding-input" placeholder="Team Password" />
               <button type="submit" className="btn-large btn-outline" onClick={(e) => this.joinSquad(e)}>LET ME IN!</button>
             </section>
