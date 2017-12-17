@@ -96,9 +96,11 @@ class App extends Component {
     const teams = this.state.teams
     const uid = this.state.uid
     for (var i = 0; i < teams.length; i++) {
-      if (teams[i].player_ids.includes(uid)) {
-        console.log(teams[i].id)
-        return true
+      for (var j = 0; j < teams[i].players.length; i++) {
+        if (teams[i].players[j].id.includes(uid)) {
+          console.log(teams[i].id)
+          return true
+        }
       }
     }
     return false
