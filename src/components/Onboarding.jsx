@@ -46,8 +46,14 @@ export default class Onboarding extends React.Component {
   }
 
   selectTeam(e) {
-    console.log('LOOSER')
     this.setState({ teamSelected: e.target.innerHTML })
+    this.passwordInput.value = ''
+  }
+
+  joinSquad(e) {
+    e.preventDefault()
+    const correctTeam = this.props.teams.filter((team) => team.team_name.toLowerCase() === this.state.teamSelected.toLowerCase())
+    // if (correctTeam.password === e.target.value)
   }
 
 
@@ -120,17 +126,24 @@ export default class Onboarding extends React.Component {
 
   uploadToFirebase(e) {
     e.preventDefault()
+    const players = []
+    for (let i = 0; i < this.player_names.length; i++) {
+      players.push({
+        id: i === 0 ? this.props.uid : '',
+        name: this.player_names[i],
+        email: this.player_emails[i]
+      })
+    }
+    console.log(players)
+    this.player_names.forEach((player) => players)
     const teamObj = {
       id: this.state.id,
       team_name: this.team_name,
-      player_names: this.player_names,
-      player_ids: this.player_ids,
-      player_emails: this.player_emails,
+      badge: this.badge,
       captains_ids: this.captains_ids,
       captains_names: this.captains_names,
-      badge: this.badge
+      players
     }
-    console.log('Submitting')
     this.props.createTeam(teamObj)
   }
 
@@ -156,18 +169,19 @@ export default class Onboarding extends React.Component {
           ?
           <section>
             <header className="onboarding-item">
-              <h2>{this.state.teamSelected}</h2>
+              <h2><span>{this.state.teamSelected}</span></h2>
               <h2>Enter your team password else you ain't getting in</h2>
             </header>
             <section className="onboarding-item">
-              <input type="text" placeholder="Team Password" />
+              <input type="password" className="onboarding-input" placeholder="Team Password" />
+              <button type="submit" className="btn-large btn-outline" onClick={(e) => this.joinSquad(e)}>LET ME IN!</button>
             </section>
           </section>
           :
           <section>
             <h2 className="onboarding-item">Live search for your team below</h2>
             <section className="onboarding-item">
-              <input type="text" className="onboarding-input" placeholder="Team Name" onChange={this.teamSearch} />
+              <input type="text" className="onboarding-input" placeholder="Team Name" onChange={this.teamSearch} ref={(e) => this.passwordInput = e} />
               {this.state.displayTeams.map((team) => <div className="display-team" onClick={(e) => this.selectTeam(e)} key={team}>{team}</div>)}
             </section>
           </section>
