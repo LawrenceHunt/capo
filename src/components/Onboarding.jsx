@@ -156,8 +156,6 @@ export default class Onboarding extends React.Component {
 
   render() {
 
-    const createOrJoin
-
     const createOrJoin = (
       <div className="onboarding-container">
         <h2 className="onboarding-item">Create a new team or join an existing one</h2>
