@@ -48,24 +48,32 @@
           transform: translateY(-100%);
 }
 button {
-  border-radius: 5%;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-radius: 5px;
   background: none;
   color: #fff;
-  padding: 10px;
-  margin: 10px;
+  padding: 3px;
 }
 button span {
-  margin-right: 5px;
+  margin: 5px;
 }
 button:hover {
   color: #000;
   background: #fff;
-  opacity: 0.5;
+  opacity: 0.8;
 }
-button .btn-large {
-  font-size: 30px;
+button.btn-large {
+  font-size: 15px;
 }
-button .btn-outline {
+button.btn-outline {
   border: 1px solid #fff;
 }
 .react-datepicker {
@@ -116,6 +124,79 @@ button .btn-outline {
 }
 .loading-screen {
   text-align: center;
+}
+.login-container {
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+.login-container .login-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 15px;
+}
+.login-container .login-header .title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-item-align: start;
+      align-self: flex-start;
+  margin-left: 30px;
+}
+.login-container .login-header .title .logo {
+  margin-right: 10px;
+  width: 30px;
+  height: 30px;
+}
+.login-container .login-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border: 1px solid #fff;
+  padding: 20px;
+}
+.login-container .login-main .login-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+.login-container .login-main .login-controls .login-btn {
+  -ms-flex-item-align: center;
+      align-self: center;
+  border: none;
 }
 .nav-bar {
   background-color: #040404;
@@ -369,16 +450,26 @@ a:visited {
 }
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+html,
+body,
+#root,
+.app-container {
+  height: 100%;
+}
 body {
   padding: 0;
   margin: 0;
-  background: url("http://wallsdesk.com/wp-content/uploads/2016/02/Black-abstract-Background.jpg") no-repeat;
-  background-size: cover;
+  background: #000;
   color: #fff;
   font-family: 'Comfortaa', cursive;
 }
 h1 {
   font-size: 30px;
+}
+h4 {
+  font-size: 12px !important;
+  margin: 0;
+  margin-top: 5px;
 }
 .main-container {
   display: -webkit-box;
@@ -396,16 +487,26 @@ ul li {
 }
 @import url("https://fonts.googleapis.com/css?family=Comfortaa");
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
+html,
+body,
+#root,
+.app-container {
+  height: 100%;
+}
 body {
   padding: 0;
   margin: 0;
-  background: url("http://wallsdesk.com/wp-content/uploads/2016/02/Black-abstract-Background.jpg") no-repeat;
-  background-size: cover;
+  background: #000;
   color: #fff;
   font-family: 'Comfortaa', cursive;
 }
 h1 {
   font-size: 30px;
+}
+h4 {
+  font-size: 12px !important;
+  margin: 0;
+  margin-top: 5px;
 }
 .main-container {
   display: -webkit-box;

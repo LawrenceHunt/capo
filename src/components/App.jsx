@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import {Route, withRouter} from 'react-router-dom'
 // Firebase
-import {base} from '../base'
+import {db, base} from '../base'
 import firebase from 'firebase';
 // Components
 import Loading from './Loading.jsx'
@@ -32,7 +32,6 @@ class App extends Component {
     this.assignTeamIfUserBelongs = this.assignTeamIfUserBelongs.bind(this)
     this.createTeam = this.createTeam.bind(this)
     this.createFixture = this.createFixture.bind(this)
-
   }
 
   componentWillMount() {
@@ -74,10 +73,15 @@ class App extends Component {
 
   authHandler(err, user) {
     if (err) console.log(err)
+    console.log(user)
     const uid = user.uid
     this.setState({
       uid
     }, this.assignTeamIfUserBelongs(uid))
+  }
+
+  checkIfUserExists(uid) {
+
   }
 
   assignTeamIfUserBelongs(uid) {
@@ -139,9 +143,14 @@ class App extends Component {
 
   render() {
     if (this.state.loading) return <Loading />
-
+    const teams = db.ref('teams')
+    teams.on('value', function(snapshot) {
+      console.log(snapshot.val())
+    }, function(errorObject) {
+      console.log("Fail: ", errorObject.code)
+    })
     return (
-      <div>
+      <div className="app-container">
         <Route path="/" render={ () => (
           <Login
             uid={this.state.uid}

@@ -50,15 +50,18 @@ export default class Onboarding extends React.Component {
     this.passwordInput.value = ''
   }
 
-  // joinSquad(e) {
-  //   e.preventDefault()
-  //   const correctTeam = this.props.teams.filter((team) => {
-  //     return team.team_name.toLowerCase() === this.state.teamSelected.toLowerCase()
-  //   })
-  //   if (correctTeam.password === e.target.value)
-  // }
-
-
+  joinSquad(e) {
+    e.preventDefault()
+    const correctTeam = this.props.teams.filter((team) => team.team_name.toLowerCase() === this.state.teamSelected.toLowerCase())
+    const inputs = Array.from(document.getElementsByClassName('join-team'))
+    if (correctTeam[0].password === inputs[1].value) {
+      console.log(Object.values(correctTeam[0].players))
+      if (Object.values(correctTeam[0].players).includes(inputs[0].value)) {
+        console.log('BEEP')
+      }
+      console.log('Whoop')
+    }
+  }
 
   handleUploadStart = () => {
     this.setState({
@@ -117,7 +120,7 @@ export default class Onboarding extends React.Component {
         if (input.value !== '') this.player_names.push(input.value)
     });
     emailInputs.forEach((input) => {
-        if (input.value !== '') this.player_emails.push(input.value)
+        if (input.value !== '') this.player_emails.push(input.value.toLowerCase())
     });
     this.setState({step: this.state.step + 1})
   }
@@ -175,8 +178,8 @@ export default class Onboarding extends React.Component {
               <h2>Enter your email and team password and you're on the squad!</h2>
             </header>
             <section className="onboarding-item">
-              <input type="email" className="onboarding-input" placeholder="Your Email" />
-              <input type="password" className="onboarding-input" placeholder="Team Password" />
+              <input type="email" className="onboarding-input join-team" placeholder="Your Email" />
+              <input type="password" className="onboarding-input join-team" placeholder="Team Password" />
               <button type="submit" className="btn-large btn-outline" onClick={(e) => this.joinSquad(e)}>LET ME IN!</button>
             </section>
           </section>
