@@ -123,6 +123,20 @@ class App extends Component {
     this.setState({fixtures})
   }
 
+  userBelongsToATeam() {
+    const teams = this.state.teams
+    const uid = this.state.uid
+    let belongs = false
+    teams.forEach((team) => {
+      team.players.forEach((player) => {
+        if (player.id === uid) {
+          belongs = true
+        }
+      })
+    })
+    return belongs
+  }
+
   render() {
     if (this.state.loading) return <Loading />
 
@@ -140,6 +154,7 @@ class App extends Component {
           <Onboarding
             createTeam={this.createTeam}
             uid={this.state.uid}
+            teams={this.state.teams}
           />
         )}
         />
