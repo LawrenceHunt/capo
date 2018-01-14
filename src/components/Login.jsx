@@ -18,7 +18,7 @@ class Login extends React.Component {
 
   renderLoginpage() {
     return (
-      <container className="login-container">
+      <div className="login-container">
         <div className="login-main">
           <div className="login-header">
             <div className="title">
@@ -36,17 +36,17 @@ class Login extends React.Component {
           </button>
         </div>
       </div>
-    </container>
+    </div>
     )
   }
 
   render() {
-    console.log('uid: ', this.props.uid)
-    return this.renderLoginpage()
+    if (!this.props.user) return this.renderLoginpage()
 
-    // if (!this.props.userBelongsToATeam) {
-    //   return this.renderRedirectToOnboarding()
-    // }
+    if (!this.props.userBelongsToATeam) {
+      return this.renderRedirectToOnboarding()
+    }
+
     // return this.renderRedirectToFixtures()
   }
 }

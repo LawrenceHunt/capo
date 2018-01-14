@@ -2,8 +2,9 @@ import React from 'react'
 import randomID from 'random-id'
 import firebase from 'firebase';
 import FileUploader from 'react-firebase-file-uploader';
+import {withRouter} from 'react-router-dom'
 
-export default class Onboarding extends React.Component {
+class Onboarding extends React.Component {
 
   constructor() {
     super();
@@ -153,7 +154,7 @@ export default class Onboarding extends React.Component {
   }
 
   render() {
-
+    console.log('rendering onboarding')
     const createOrJoin = (
       <div className="onboarding-container">
         <h2 className="onboarding-item">Create a new team or join an existing one</h2>
@@ -295,7 +296,9 @@ export default class Onboarding extends React.Component {
       5: teamPlayers,
       6: confirmation
     }
-
+    
     return createTeamViews[this.state.step]
   }
 }
+
+export const OnboardingWithRouter = withRouter(Onboarding)
