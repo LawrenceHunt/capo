@@ -6,7 +6,7 @@ import {withRouter} from 'react-router-dom'
 import Loading from '../Common/Loading.jsx'
 
 
-class Onboarding extends React.Component {
+export default class Onboarding extends React.Component {
 
   constructor() {
     super();
@@ -304,5 +304,3 @@ class Onboarding extends React.Component {
     return createTeamViews[this.state.step]
   }
 }
-
-export const OnboardingWithRouter = withRouter(Onboarding)
