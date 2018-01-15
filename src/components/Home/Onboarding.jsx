@@ -3,6 +3,8 @@ import randomID from 'random-id'
 import firebase from 'firebase';
 import FileUploader from 'react-firebase-file-uploader';
 import {withRouter} from 'react-router-dom'
+import Loading from '../Common/Loading.jsx'
+
 
 class Onboarding extends React.Component {
 
@@ -140,7 +142,7 @@ class Onboarding extends React.Component {
         email: this.player_emails[i]
       })
     }
-    console.log(players)
+
     this.player_names.forEach((player) => players)
     const teamObj = {
       id: this.state.id,
@@ -154,10 +156,12 @@ class Onboarding extends React.Component {
   }
 
   render() {
-    console.log('rendering onboarding')
+    if (!this.props.user) return <Loading />
+
     const createOrJoin = (
       <div className="onboarding-container">
-        <h2 className="onboarding-item">Create a new team or join an existing one</h2>
+        <h2>Welcome {this.props.user.name.split(" ")[0]}!</h2>
+        <h2>Create a new team or join an existing one</h2>
         <form>
           <div className="onboarding-item">
             <button className="btn-large btn-outline" onClick={this.createTeam}>Create Team</button>
@@ -296,7 +300,7 @@ class Onboarding extends React.Component {
       5: teamPlayers,
       6: confirmation
     }
-    
+
     return createTeamViews[this.state.step]
   }
 }

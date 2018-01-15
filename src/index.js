@@ -1,17 +1,17 @@
 // react
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 // css
 import './styles/style.css';
 // components
-import AppWithRouter from './components/App.jsx';
+import AppWithRouter from './components/AppStart/App.jsx';
 import registerServiceWorker from './registerServiceWorker';
 
 
 const Routes = (
-  <Router >
+  <Router>
     <AppWithRouter />
   </Router>
 )

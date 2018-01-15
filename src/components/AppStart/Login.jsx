@@ -4,9 +4,9 @@ import FontAwesome from 'react-fontawesome'
 
 class Login extends React.Component {
 
-  renderRedirectToOnboarding() {
+  renderRedirectToHome() {
     return (
-      <Redirect to="/onboarding" />
+      <Redirect to="/home" />
     )
   }
 
@@ -41,13 +41,13 @@ class Login extends React.Component {
   }
 
   render() {
-    if (!this.props.user) return this.renderLoginpage()
+    if (!this.props.uid) return this.renderLoginpage()
 
-    if (!this.props.userBelongsToATeam) {
-      return this.renderRedirectToOnboarding()
+    if (!this.props.userBelongsToATeam()) {
+      return this.renderRedirectToHome()
     }
 
-    // return this.renderRedirectToFixtures()
+    return this.renderRedirectToFixtures()
   }
 }
 

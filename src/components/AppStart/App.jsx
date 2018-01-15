@@ -1,16 +1,17 @@
 // React
 import React, { Component } from 'react';
-import {Route, withRouter, Redirect} from 'react-router-dom'
+import {Route, withRouter} from 'react-router-dom'
 // Firebase
-import {db, base} from '../base'
+import {db, base} from '../../base'
 import firebase from 'firebase';
 // Components
-import Loading from './Loading.jsx'
+// import Loading from '../Common/Loading.jsx'
 import Login from './Login.jsx'
-import Team from './Team.jsx'
-import Fixtures from './Fixtures.jsx'
-import Table from './Table.jsx'
-import {OnboardingWithRouter} from './Onboarding.jsx'
+import Fixtures from '../Fixtures/Fixtures.jsx'
+import Table from '../Table.jsx'
+import Team from '../Home/Team.jsx'
+import {HomeWithRouter} from '../Home/Home.jsx'
+// import {OnboardingWithRouter} from '../Home/Onboarding.jsx'
 // default state
 // import teams from '../data/teams'
 
@@ -20,7 +21,6 @@ class App extends Component {
     super();
 
     this.state = {
-      // loading: true,
       teams: [],
       fixtures: {},
       currentlyViewingTeam: null,
@@ -32,32 +32,12 @@ class App extends Component {
     this.logout = this.logout.bind(this)
     this.createTeam = this.createTeam.bind(this)
     this.createFixture = this.createFixture.bind(this)
+    this.userBelongsToATeam = this.userBelongsToATeam.bind(this)
   }
 
-
-  //
-  // componentWillMount() {
-  //   this.teamsRef = base.syncState('teams', {
-  //     context: this,
-  //     state: 'teams',
-  //
-  //     then: () => {
-  //       this.fixturesRef = base.syncState('fixtures', {
-  //         context: this,
-  //         state: 'fixtures',
-  //         then: () => {
-  //           this.setState({loading: false})
-  //         }
-  //       })
-  //     }
-  //   })
-  // }
-  //
-  // componentWillUnmount() {
-  //   base.removeBinding(this.teamsRef)
-  //   base.removeBinding(this.fixturesRef)
-  // }
-
+  componentWillUnmount() {
+    base.removeBinding(this.userRef)
+  }
 
   // USER AUTH HANDLING...
   authenticate() {
@@ -75,6 +55,7 @@ class App extends Component {
 
   authHandler(err, user) {
     if (err) console.log(err)
+    this.setState({uid: user.uid})
     this.checkIfUserExistsAndCreate(user)
   }
 
@@ -96,22 +77,6 @@ class App extends Component {
       state: 'user'
     })
   }
-
-  //
-  // goToTeamOrOnboarding(uid) {
-  //   const userRef = db.ref('users/' + uid)
-  //   userRef.on('value', (snapshot) => {
-  //     const user = snapshot.val()
-  //     const teams = user.teams
-  //     if (teams && teams.length) {
-  //       this.props.history.push(`/teams/${teams[0]}`)
-  //     } else {
-  //       this.props.history.push(`/onboarding`)
-  //     }
-  //   }, function(errorObject) {
-  //     console.log('could not find' + errorObject.code)
-  //   })
-  // }
 
   logout() {
     firebase.auth().signOut().then(() => {
@@ -145,44 +110,31 @@ class App extends Component {
   }
 
   userBelongsToATeam() {
-    const teams = this.state.teams
-    const uid = this.state.uid
-    let belongs = false
-    teams.forEach((team) => {
-      team.players.forEach((player) => {
-        if (player.id === uid) {
-          belongs = true
-        }
-      })
-    })
-    return belongs
+    const user = this.state.user
+    if (!user) return
+    return Array.isArray(user.teams) && user.teams.length
   }
 
   render() {
-    // if (this.state.loading) return <Loading />
     return (
       <div className="app-container">
-        <Route path="/" render={() => (
-            <Redirect to={"/login"}/>
-          )}
-        />
-
-        <Route path="/login" render={ () => (
+        <Route path="/" render={ () => (
           <Login
             uid={this.state.uid}
-            currentlyViewingTeam={this.state.currentlyViewingTeam}
             authenticate={this.authenticate}
+            userBelongsToATeam={this.userBelongsToATeam}
           />) }
         />
 
-        <Route path="/onboarding" render={() => (
-          <OnboardingWithRouter
-            createTeam={this.createTeam}
-            uid={this.state.uid}
-            teams={this.state.teams}
-          />
-        )}
+      <Route path="/home" render={() => (
+        <HomeWithRouter
+          createTeam={this.createTeam}
+          user={this.state.user}
+          teams={this.state.teams}
+          logout={this.logout}
         />
+      )}
+      />
 
       <Route path="/fixtures" render={() => (
         <Fixtures

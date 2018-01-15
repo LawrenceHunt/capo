@@ -199,7 +199,7 @@ button.btn-outline {
   border: none;
 }
 .nav-bar {
-  background-color: #040404;
+  background-color: #fff;
   opacity: 0.8;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -208,8 +208,7 @@ button.btn-outline {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  width: 10vw;
-  min-width: 95px;
+  width: 60px;
   height: 100vh;
   -ms-flex-pack: distribute;
       justify-content: space-around;
@@ -217,16 +216,20 @@ button.btn-outline {
       -ms-flex-align: center;
           align-items: center;
 }
-a {
+.nav-bar .nav-item {
+  color: #000;
+}
+.nav-bar .nav-item a {
+  color: #000;
   text-decoration: none;
 }
-a:visited {
+.nav-bar .nav-item a:visited {
   color: inherit;
 }
-.nav-team-logo {
+.nav-bar .nav-team-logo {
   border-radius: 100%;
-  height: 100px;
-  width: 100px;
+  height: 50px;
+  width: 50px;
 }
 .team-grid {
   display: -webkit-box;
@@ -475,9 +478,6 @@ h4 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 a {
   cursor: pointer;
@@ -512,9 +512,6 @@ h4 {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 a {
   cursor: pointer;

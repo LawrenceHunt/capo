@@ -1,10 +1,10 @@
 import React from 'react';
 import FontAwesome from 'react-fontawesome'
-import NavBar from './NavBar.jsx'
+import NavBar from '../Common/NavBar.jsx'
 
 class Team extends React.Component {
 
-  generateCards () {
+  renderCards () {
     return (
       <div className="team-grid">
         <div className="player-card">
@@ -72,7 +72,7 @@ class Team extends React.Component {
   render() {
     const teamPage = (
       <div className="team">
-        {this.generateCards()}
+        {this.renderCards()}
       </div>
     )
 

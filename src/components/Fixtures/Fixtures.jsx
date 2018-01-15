@@ -1,6 +1,5 @@
 import React from 'react'
-
-import NavBar from './NavBar.jsx'
+import NavBar from '../Common/NavBar.jsx'
 import Fixture from './Fixture'
 import FixtureForm from './FixtureForm.jsx'
 import FontAwesome from 'react-fontawesome'
