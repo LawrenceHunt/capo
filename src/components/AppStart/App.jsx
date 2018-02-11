@@ -40,6 +40,12 @@ class App extends Component {
   }
 
   // USER AUTH HANDLING...
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user) this.authHandler(null, user)
+    })
+  }
+
   authenticate() {
     var provider = new firebase.auth.FacebookAuthProvider()
     firebase.auth().signInWithPopup(provider).then((user) => {
@@ -47,34 +53,39 @@ class App extends Component {
     })
   }
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) this.authHandler(null, user)
-    })
+  refineUser(user) {
+    // when signing in (as opposed to loading up the app when already signed in)
+    // user is sometimes passed through as a different object, which has the usual
+    // info as a nested property. FUCKING HELL FIREBASE
+    return user.uid ? user : user.user
   }
 
   authHandler(err, user) {
     if (err) console.log(err)
+    user = this.refineUser(user)
     this.setState({uid: user.uid})
-    this.checkIfUserExistsAndCreate(user)
+    this.addToFirebaseIfNew(user)
+    this.syncUserState(user)
   }
 
-  checkIfUserExistsAndCreate(user) {
-    const userRef = db.ref('users/' + user.uid)
-    userRef.on('value', (snapshot) => {
-      const userObj = {
-        id: user.uid,
-        name: user.displayName,
-        profilePic: user.photoURL
-      }
-      if (!snapshot.val()) {
-        userRef.set(userObj)
-      }
-    })
-    // sync user state.
+  syncUserState(user) {
     this.userRef = base.syncState('users/' + user.uid, {
       context: this,
       state: 'user'
+    })
+  }
+
+  addToFirebaseIfNew(user) {
+    const userRef = db.ref('users/' + user.uid)
+    userRef.once('value', (snapshot) => {
+      if (!snapshot.val() && user.uid) {
+        const userObj = {
+          id: user.uid,
+          name: user.displayName,
+          profilePic: user.photoURL
+        }
+        userRef.set(userObj)
+      }
     })
   }
 
@@ -121,6 +132,7 @@ class App extends Component {
         <Route path="/" render={ () => (
           <Login
             uid={this.state.uid}
+            user={this.state.user}
             authenticate={this.authenticate}
             userBelongsToATeam={this.userBelongsToATeam}
           />) }
@@ -129,6 +141,7 @@ class App extends Component {
       <Route path="/home" render={() => (
         <HomeWithRouter
           createTeam={this.createTeam}
+          uid={this.state.uid}
           user={this.state.user}
           teams={this.state.teams}
           logout={this.logout}

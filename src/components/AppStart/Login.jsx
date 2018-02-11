@@ -5,6 +5,7 @@ import FontAwesome from 'react-fontawesome'
 class Login extends React.Component {
 
   renderRedirectToHome() {
+
     return (
       <Redirect to="/home" />
     )

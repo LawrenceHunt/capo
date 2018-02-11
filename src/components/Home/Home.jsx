@@ -7,12 +7,14 @@ import Onboarding from './Onboarding.jsx'
 class Home extends React.Component {
 
   render() {
-    if (!this.props.user) return <Loading />
+    if (!this.props.user || !this.props.user.name) return <Loading />
+
 
     const userName = this.props.user.name.split(" ")[0]
 
-    const OnBoarding = (
-
+    const onboarding = (
+      <Onboarding
+      />
     )
 
     return (
@@ -21,8 +23,7 @@ class Home extends React.Component {
         <div>
           <h2>Welcome, {userName}.</h2>
         </div>
-
-
+        {onboarding}
       </div>
     )
   }
